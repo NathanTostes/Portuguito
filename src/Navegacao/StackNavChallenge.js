@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import {useTabDisplay} from "../hooks/useTabDisplay"
 import MenuChallenge from "../Views/MenuChallenge";
+import IlhasChallenge from "../Views/IlhasChallenge";
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,7 @@ export default function StackNavChallenge({navigation, route}) {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="MenuChallenge" component={MenuChallenge} />
+      <Stack.Screen name="IlhasChallenge" component={IlhasChallenge} />
       
     </Stack.Navigator>
   );

@@ -40,9 +40,9 @@ export default function MenuChallenge() {
       <TouchableOpacity
         style={Styles.boxLastDay}
         onPress={() =>
-          navigation.navigate("QuestoesTrilha", {
-            screen: "QuestoesTrilha",
-            params: { info: info, subTemaDoc: subTemaDoc },
+          navigation.navigate("IlhasChallenge", {
+            screen: "IlhasChallenge",
+            // params: { info: info, subTemaDoc: subTemaDoc },
           })
         }
       >
@@ -77,9 +77,9 @@ export default function MenuChallenge() {
       <TouchableOpacity
         style={Styles.boxImageButton}
         onPress={() =>
-          navigation.navigate("QuestoesTrilha", {
-            screen: "QuestoesTrilha",
-            params: { info: info, subTemaDoc: subTemaDoc },
+          navigation.navigate("IlhasChallenge", {
+            screen: "IlhasChallenge",
+            // params: { info: info, subTemaDoc: subTemaDoc },
           })
         }
       >
