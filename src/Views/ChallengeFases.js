@@ -4,7 +4,7 @@ import { View, Text, ImageBackground, TouchableOpacity, Image } from "react-nati
 import { Ionicons } from "react-native-vector-icons";
 import Styles from "../Styles.js/StyleChallengeFases.js";
 import { useRoute } from "@react-navigation/native";
-import { doc, getDocs, collection, query, where } from "firebase/firestore";
+import { doc, getDocs, collection, query, where, getDoc, setDoc, updateDoc, increment} from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { FIREBASE_APP, FIREBASE_AUTH } from "../../FirebaseConfig.js";
 import { useNavigation } from "@react-navigation/native";
@@ -46,16 +46,36 @@ export default function ChallengeFases() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userRef = doc(db, "users", userId);
-      const desafioInfoCollectionRef = collection(userRef, "desafioInfo");
-
-      const dayInfoQuery = query(desafioInfoCollectionRef, where("dia", "==", dayName));
-      const dayInfoSnapshot = await getDocs(dayInfoQuery);
-
-      const dayInfoDoc = (dayInfoSnapshot.docs[0]).data();
-      setLastCompletedFase(dayInfoDoc.ultimaFaseConcluida);
-    }
-
+        const userRef = doc(db, "users", userId);
+        const desafioInfoCollectionRef = collection(userRef, "desafioInfo");
+        const dayInfoQuery = query(desafioInfoCollectionRef, where("dia", "==", dayName));
+        const dayInfoSnapshot = await getDocs(dayInfoQuery);
+  
+          const dayInfoDoc = dayInfoSnapshot.docs[0].data();
+          const ultimaFase = dayInfoDoc.ultimaFaseConcluida;
+          setLastCompletedFase(ultimaFase);
+  
+          if (ultimaFase > 0 && ultimaFase > (lastCompletedFase || 0)) {
+            const userDoc = await getDoc(userRef);
+            const userName = userDoc.exists() ? userDoc.data().nome : "NomeDesconhecido";
+  
+            const faseConcluidaRef = doc(db, "fasesConcluidasDesafio", userId);
+            const faseConcluidaDoc = await getDoc(faseConcluidaRef);
+    
+            if (faseConcluidaDoc.exists()) {
+              await updateDoc(faseConcluidaRef, {
+                fasesConcluidas: increment(1),
+                userName: userName 
+              });
+            } else {
+              await setDoc(faseConcluidaRef, {
+                fasesConcluidas: 1,
+                userId: userId,
+                userName: userName 
+              });
+            }
+          }
+    };  
     const unsubscribe = navigation.addListener("focus", fetchData)
 
     fetchData();
