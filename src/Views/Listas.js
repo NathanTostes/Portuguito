@@ -32,6 +32,7 @@ import {
 import { nanoid } from "nanoid";
 import "react-native-get-random-values";
 import { userReference } from "../FuncoesFirebase/Funcoes";
+import * as Clipboard from 'expo-clipboard';
 
 export default function Listas() {
   const [atualizarDados, setAtualizarDados] = useState(false);
@@ -261,6 +262,11 @@ export default function Listas() {
     );
   }
 
+  const copyCode = async () => {
+    await Clipboard.setStringAsync(itemId);
+    Alert.alert("Código copiado para a área de transferência!");
+  };
+
   const ModalEditar = () => {
     const confirmarFinalizacao = () => {
       Alert.alert(
@@ -403,8 +409,12 @@ export default function Listas() {
           <View style={style.boxGeral}>
             <View style={{ alignItems: "center" }}>
               <View style={{ justifyContent: "center", height: 185 }}>
-                <TouchableOpacity style={style.botaoEditar}>
-                  <Text style={style.txtEditar}>Código: {itemId}</Text>
+                <TouchableOpacity style={style.botaoCodigo}
+                  onPress={() => {
+                    copyCode();
+                  }}>
+                  <Text style={style.txtCodigo}>Código: {itemId}</Text>
+                  <FontAwesome5 name="clipboard-list" size={40} color={"#fff"} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={style.botaoEditar}
