@@ -19,11 +19,11 @@ export default StyleSheet.create({
     },
     boxImageBoss: {
         height: 200,
-        width: 150,
+        width: 200,
         flex: 1,
     },
     boxLastDay: {
-        top: 8,
+        top: -35,
         height: 200,
         width: 150,
         alignItems: 'center',
@@ -87,27 +87,27 @@ export default StyleSheet.create({
         transform: [{ rotateY: '180deg' }],
     },
     bottomPierLeft: {
-        right: 300,
-        top: 245,
+        right: 250,
+        top: 180,
     },
     bottomPierRight: {
-        left: 300,
-        top: 135,
+        left: 230,
+        top: 15,
     },
     centerPierLeft: {
-        right: 210,
-        bottom: 120,
+        right: 180,
+        bottom: 250,
     },
     centerPierRight: {
-        left: 140,
-        bottom: 258,
+        left: 190,
+        bottom: 370,
     },
     topPierLeft: {
-        right: 140,
-        bottom: 530,
+        right: 150,
+        bottom: 630,
     },
     topPierRight: {
-        left: 140,
-        bottom: 665,
+        left: 150,
+        bottom: 760,
     },
 });
