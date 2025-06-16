@@ -1,4 +1,7 @@
 import { StyleSheet, TouchableOpacity } from "react-native"
+import { heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import { Dimensions } from 'react-native';
+const { height } = Dimensions.get('window');
 
 export default StyleSheet.create({
     imageAjust: {
@@ -20,11 +23,11 @@ export default StyleSheet.create({
         height: 125,
     },
     boxImageBoss: {
-        height: 200,
-        width: 200,
-        right:4,
-        top:-4,
-        flex: 1,
+        width: wp('60%'), 
+        height: wp('52%'),
+        position: 'absolute',
+        resizeMode: 'contain',
+        top: hp('15%'),
         transform: [{ scale: 1.2 }],
     },
     boxLastDay: {
@@ -58,8 +61,8 @@ export default StyleSheet.create({
         position: 'absolute',
     },
     centerFaseIcon: {
-        marginTop: 15,
-        marginRight: 50,
+        marginTop: hp('40%'),
+        marginRight: 100,
     },
     rightFaseIcon: {
         right:45,
@@ -88,7 +91,7 @@ export default StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         flexDirection: 'column',
-        padding: 200,
+        paddingTop: hp('5%'),
 
     },
     rotatedFase: {
@@ -96,39 +99,39 @@ export default StyleSheet.create({
     },
     bottomPierLeft: {
         position: 'absolute',
-        right: 410,
-        bottom: '55%',
-        transform: [{ scale: 0.9 }],
+        right: wp('50%'),
+        bottom: hp('33%'),
+        transform: [{ scale: height > 800 ? 0.9 : height < 700 ? 0.7 : 1 }],
     },
     bottomPierRight: {
         position: 'absolute',
-        left: 410,
-        bottom: '52%',
-        transform: [{ scale: 0.9 }],
+        left: wp('50%'),
+        bottom: hp('32%'),
+        transform: [{ scale: height > 800 ? 0.9 : height < 700 ? 0.7 : 1 }],
         
     },
     centerPierLeft: {
         position: 'absolute',
-        right: 370,
-        bottom: '75%',
-        transform: [{ scale: 0.8 }],
+        right: wp('40%'),
+        bottom: hp('45%'),
+        transform: [{ scale: height > 800 ? 0.8 : height < 700 ? 0.6 : 1 }],
     },
     centerPierRight: {
         position: 'absolute',
-        left: 370,
-        bottom: '75%',
-        transform: [{ scale: 0.8 }],
+        left: wp('40%'),
+        bottom: hp('45%'),
+        transform: [{ scale: height > 800 ? 0.8 : height < 700 ? 0.6 : 1 }],
     },
     topPierLeft: {
         position: 'absolute',
-        right: 335,
-        bottom: '90%',
-        transform: [{ scale: 0.7 }],
+        right: wp('32%'),
+        bottom: hp('55%'),
+        transform: [{ scale: height > 800 ? 0.7 : height < 700 ? 0.5 : 1 }],
     },
     topPierRight: {
         position: 'absolute',
-        left: 335,
-        bottom: '90%',
-        transform: [{ scale: 0.7 }],
+        left: wp('32%'),
+        bottom: hp('55%'),
+        transform: [{ scale: height > 800 ? 0.7 : height < 700 ? 0.5 : 1 }],
     },
 });
