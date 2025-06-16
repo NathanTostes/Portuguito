@@ -166,7 +166,7 @@ const ClosedDay = ({ index }) => {
         <>
           <Image
             source={require("../Imagens/BarcoEscuro.png")}
-            style={[Styles.boxImageImage, Styles.rotatedFase]}
+            style={[Styles.boxImageImage, Styles.rotatedFase,]}
           />
           <FaseIcon
             style={Styles.leftFaseIcon}
@@ -196,6 +196,7 @@ const ClosedDay = ({ index }) => {
       source={require("../Imagens/pier.png")}
       resizeMode="cover"
     >
+      
       <View style={Styles.divTela}>
         {
           currentDay === 6 ? (

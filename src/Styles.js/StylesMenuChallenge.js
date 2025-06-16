@@ -5,7 +5,9 @@ export default StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        
     },
+    
     rankingIcon: {
         position: "absolute",
         width: 125,
@@ -20,7 +22,10 @@ export default StyleSheet.create({
     boxImageBoss: {
         height: 200,
         width: 200,
+        right:4,
+        top:-4,
         flex: 1,
+        transform: [{ scale: 1.2 }],
     },
     boxLastDay: {
         top: -35,
@@ -35,6 +40,7 @@ export default StyleSheet.create({
         height: 100,
         width: 175,
         flex: 1,
+        
     },
     boxImageButton: {
         height: 135,
@@ -56,10 +62,12 @@ export default StyleSheet.create({
         marginRight: 50,
     },
     rightFaseIcon: {
-        left: 6,
+        right:45,
+        bottom:40,
     },
     leftFaseIcon: {
-        right: 55,
+        left: 10,
+        bottom:35,
     },
     activeIcon: {
         marginTop: 10,
@@ -87,27 +95,40 @@ export default StyleSheet.create({
         transform: [{ rotateY: '180deg' }],
     },
     bottomPierLeft: {
-        right: 250,
-        top: 180,
+        position: 'absolute',
+        right: 410,
+        bottom: '55%',
+        transform: [{ scale: 0.9 }],
     },
     bottomPierRight: {
-        left: 230,
-        top: 15,
+        position: 'absolute',
+        left: 410,
+        bottom: '52%',
+        transform: [{ scale: 0.9 }],
+        
     },
     centerPierLeft: {
-        right: 180,
-        bottom: 250,
+        position: 'absolute',
+        right: 370,
+        bottom: '75%',
+        transform: [{ scale: 0.8 }],
     },
     centerPierRight: {
-        left: 190,
-        bottom: 370,
+        position: 'absolute',
+        left: 370,
+        bottom: '75%',
+        transform: [{ scale: 0.8 }],
     },
     topPierLeft: {
-        right: 150,
-        bottom: 630,
+        position: 'absolute',
+        right: 335,
+        bottom: '90%',
+        transform: [{ scale: 0.7 }],
     },
     topPierRight: {
-        left: 150,
-        bottom: 760,
+        position: 'absolute',
+        left: 335,
+        bottom: '90%',
+        transform: [{ scale: 0.7 }],
     },
 });
