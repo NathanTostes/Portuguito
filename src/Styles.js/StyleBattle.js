@@ -92,7 +92,7 @@ export default StyleSheet.create({
         height: 120,
         width: 120,
         backgroundColor: '#F5505A',
-        resizeMode: "contain",
+        // resizeMode: "contain",
     },
 
     boxImageButton: {

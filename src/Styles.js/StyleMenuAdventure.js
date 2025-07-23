@@ -46,8 +46,6 @@ export default StyleSheet.create({
   imagemPersonagem: {
     width: 180,
     height: 180,
-    backgroundColor: '#F5505A',
-    resizeMode: "contain",
   },
 
   caractherName: {

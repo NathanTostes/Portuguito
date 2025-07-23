@@ -31,6 +31,7 @@ export default function MenuAdventure() {
         <View style={Styles.personagem}>
           <Image
             style={Styles.imagemPersonagem}
+            source={require("../Imagens/adventure/Portuguita-frente.png")}
           />
           <Text style={Styles.caractherName}>Portuguita</Text>
         </View>
