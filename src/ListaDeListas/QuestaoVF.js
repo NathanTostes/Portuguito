@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity, Text, Modal, ActivityIndicator } from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
-import Markdown from "react-native-markdown-display";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { FIREBASE_APP } from "../../FirebaseConfig";
 import styles from "../ListaDeListas/styles";
@@ -101,21 +100,16 @@ export default function QuestaoVF({ route, navigation }) {
                                 </View>
                             </Modal>
                         </View>
-
-                        <Markdown
-                            style={{
-                                body: {
-                                    fontSize: 16,
-                                    color: "#fff",
-                                    width: "90%",
-                                    padding: 5,
-                                    textAlign: "justify",
-                                    fontFamily: "Inder_400Regular",
-                                },
-                            }}
-                        >
+                        <Text style={{
+                            fontSize: 16,
+                            color: "#fff",
+                            width: "90%",
+                            padding: 5,
+                            fontFamily: "Inder_400Regular",
+                            textAlign: "justify"
+                        }}>
                             {question.pergunta}
-                        </Markdown>
+                        </Text>
                     </View>
 
                     <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 20, gap: 5 }}>
