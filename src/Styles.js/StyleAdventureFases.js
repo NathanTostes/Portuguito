@@ -91,7 +91,7 @@ export default StyleSheet.create({
     boxImageImage: {
         height: 120,
         width: 120,
-        backgroundColor: '#F5505A',
+        // backgroundColor: '#F5505A',
         resizeMode: "contain",
     },
 
@@ -106,7 +106,7 @@ export default StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         position: 'absolute',
-        top: 94,
+        top: 114,
         fontFamily: 'Inder_400Regular',
 
     },

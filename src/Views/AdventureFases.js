@@ -16,6 +16,7 @@ export default function AdventureFases() {
             >
                 <Image
                     style={Styles.boxImageImage}
+                    source={require("../Imagens/icone_13.png")}
                 />
                 <Text style={Styles.boxImageButtonText}>Fase {txt}</Text>
             </TouchableOpacity>
@@ -36,19 +37,19 @@ export default function AdventureFases() {
     return (
         <ImageBackground
             style={Styles.imageAjust}
-            source={require("../Imagens/Trilha_Atividades1.png")}
+            source={require("../Imagens/adventure/Fundo - Área 1.png")}
         >
             <View style={Styles.box}>
                 <View style={Styles.AjustItens_high}>
                     <View style={Styles.boxImage}>
-                        <FreeFased 
-                            txt={1} 
+                        <FreeFased
+                            txt={1}
                             faseInfo={{
                                 boss: false,
                                 enemy1: true,
                                 enemy2: false,
                                 enemy3: false,
-                            }} 
+                            }}
                         />
                     </View>
                 </View>
@@ -56,14 +57,14 @@ export default function AdventureFases() {
             <View style={Styles.box}>
                 <View style={Styles.AjustItens_center}>
                     <View style={Styles.boxImage}>
-                        <FreeFased 
-                            txt={2} 
+                        <FreeFased
+                            txt={2}
                             faseInfo={{
                                 boss: false,
                                 enemy1: true,
                                 enemy2: true,
                                 enemy3: true,
-                            }} 
+                            }}
                         />
                     </View>
                 </View>
@@ -71,14 +72,14 @@ export default function AdventureFases() {
             <View style={Styles.box}>
                 <View style={Styles.AjustItens_low}>
                     <View style={Styles.boxImage}>
-                        <FreeFased 
-                            txt={3} 
+                        <FreeFased
+                            txt={3}
                             faseInfo={{
                                 boss: true,
                                 enemy1: false,
                                 enemy2: false,
                                 enemy3: false,
-                            }} 
+                            }}
                         />
                     </View>
                 </View>

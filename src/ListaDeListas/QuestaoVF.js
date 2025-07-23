@@ -109,7 +109,7 @@ export default function QuestaoVF({ route, navigation }) {
                                     color: "#fff",
                                     width: "90%",
                                     padding: 5,
-                                    textAlign: "left",
+                                    textAlign: "justify",
                                     fontFamily: "Inder_400Regular",
                                 },
                             }}

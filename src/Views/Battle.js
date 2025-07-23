@@ -39,6 +39,20 @@ export default function Battle({ route, navigation }) {
             <TouchableOpacity style={Styles.boxImageButton} onPress={attackEnemy}>
                 <Image
                     style={Styles.boxImageImage}
+                    source={require("../Imagens/adventure/Cogushu.png")}
+                />
+                <Text style={Styles.boxImageButtonText}>{txt}</Text>
+            </TouchableOpacity>
+        );
+    };
+
+    const Boss = ({ txt }) => {
+        return (
+            <TouchableOpacity style={Styles.boxImageButton} onPress={attackEnemy}>
+                <Image
+                    style={Styles.boxImageImage}
+                    source={require("../Imagens/adventure/Cuca2.png")}
+                    style={{height: 300, width: 300}}
                 />
                 <Text style={Styles.boxImageButtonText}>{txt}</Text>
             </TouchableOpacity>
@@ -48,13 +62,13 @@ export default function Battle({ route, navigation }) {
     return (
         <ImageBackground
             style={Styles.imageAjust}
-            source={require("../Imagens/Trilha_Atividades1.png")}
+            source={require("../Imagens/adventure/C.Luta-Área1.png")}
         >
             {faseInfo.boss && (
                 <View style={Styles.box}>
                     <View style={Styles.AjustItens_high}>
                         <View style={Styles.boxImage}>
-                            <Enemy txt={"Boss"} />
+                            <Boss txt={"Boss"} />
                         </View>
                     </View>
                 </View>
