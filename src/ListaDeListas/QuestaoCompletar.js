@@ -107,7 +107,7 @@ export default function QuestaoLacuna({ route, navigation }) {
 
                 </View>
                 <View style={{ flexDirection: "row", flexWrap: "wrap", marginTop: 30, marginBottom: 10, alignItems: "center" }}>
-                    <Text style={{ color: "#fff", fontSize: 18, fontFamily: "Inder_400Regular" }}>
+                    <Text style={{ color: "#fff", fontSize: 18, fontFamily: "Inder_400Regular", textAlign:"justify" }}>
                         {question.preLacuna + " "}
                     </Text>
 
@@ -130,7 +130,7 @@ export default function QuestaoLacuna({ route, navigation }) {
                         autoCorrect={false}
                     />
 
-                    <Text style={{ color: "#fff", fontSize: 18, fontFamily: "Inder_400Regular" }}>
+                    <Text style={{ color: "#fff", fontSize: 18, fontFamily: "Inder_400Regular", textAlign:"justify" }}>
                         {" " + question.posLacuna}
                     </Text>
                 </View>
