@@ -209,13 +209,7 @@ export default function UserProfile() {
           </View>
         </View>
 
-        <View style={Styles.containerFilho}>
-          <View style={[Styles.viewOptions, Styles.campoEmail]}>
-            <Text style={Styles.txtInput}>
-              E-mail: {user ? user.email : ""}
-            </Text>
-          </View>
-        </View>
+        
 
         <Text style={Styles.txtAchievements}>Conquistas</Text>
 

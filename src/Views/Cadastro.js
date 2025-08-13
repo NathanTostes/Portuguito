@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, TextInput, TouchableOpacity, Text, Alert, ScrollView, Modal } from "react-native";
 import Styles from "../Styles.js/StylesCadastro";
 import { LinearGradient } from "expo-linear-gradient";
@@ -10,7 +10,9 @@ import { getFirestore } from "firebase/firestore";
 import styles from "../Styles.js/StylesTermoDeUso";
 import TextPolicyPrivacy from "./TextPolicyPrivacy";
 
+
 export default function Cadastro() {
+  
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [confimarEmail, setConfirmarEmail] = useState("");
@@ -256,6 +258,11 @@ export default function Cadastro() {
 
             <TextInput
               style={Styles.input}
+              autoCorrect={false}
+              autoComplete="off"
+              autoCompleteType="off"
+              keyboardType="default"
+              contextMenuHidden={true}
               onChangeText={(text) => setNome(text)}
             />
           </View>
@@ -265,6 +272,7 @@ export default function Cadastro() {
 
             <TextInput
               style={Styles.input}
+              contextMenuHidden={true}
               onChangeText={(text) => setEmail(text.toLocaleLowerCase())}
             />
           </View>
@@ -274,6 +282,7 @@ export default function Cadastro() {
 
             <TextInput
               style={Styles.input}
+              contextMenuHidden={true}
               onChangeText={(text) => setConfirmarEmail(text.toLocaleLowerCase())}
             />
           </View>
@@ -283,6 +292,7 @@ export default function Cadastro() {
 
             <TextInput
               style={Styles.input}
+              contextMenuHidden={true}
               onChangeText={(text) => setConfirmarSenha(text)}
               secureTextEntry={true}
             />
@@ -292,6 +302,7 @@ export default function Cadastro() {
 
             <TextInput
               style={Styles.input}
+              contextMenuHidden={true}
               onChangeText={(text) => setSenha(text)}
               secureTextEntry={true}
             />

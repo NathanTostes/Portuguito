@@ -74,6 +74,11 @@ export default function Home() {
             <Text style={Styles.txtInput}>E-mail:</Text>
             <TextInput
               style={Styles.input}
+              autoCorrect={false}
+              autoComplete="off"
+              autoCompleteType="off"
+              keyboardType="email-address"
+              contextMenuHidden={true}
               onChangeText={(text) => setEmail(text)}
             />
           </View>
@@ -82,6 +87,11 @@ export default function Home() {
             <Text style={Styles.txtInput}>Senha:</Text>
             <TextInput
               style={Styles.input}
+              autoCorrect={false}
+              autoComplete="off"
+              autoCompleteType="off"
+              keyboardType="visible-password"
+              contextMenuHidden={true}
               onChangeText={(text) => setSenha(text)}
               secureTextEntry={true}
             />
