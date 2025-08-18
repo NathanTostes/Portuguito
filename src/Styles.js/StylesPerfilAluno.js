@@ -27,6 +27,13 @@ export default StyleSheet.create({
         alignItems: "center",
         flexDirection: "row",
     },
+    containerBotoes: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 10,                    
+    marginTop: 20,
+    },
 
     numberDays: {
         alignItems: "center",

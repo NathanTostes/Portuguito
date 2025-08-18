@@ -13,6 +13,13 @@ export default StyleSheet.create({
     containerFilho: {
         marginTop: 10,
     },
+    containerBotoes: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 10,                    
+    marginTop: 20,
+    },
     image: {
         width: null,
         height: 'auto',
