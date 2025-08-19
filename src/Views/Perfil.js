@@ -107,7 +107,7 @@ export default function Perfil() {
           <TouchableOpacity style={[Styles.botao, Styles.sombra]} onPress={() => logout()}>
             <Text style={Styles.txtBotao}>Sair</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[Styles.botao, Styles.sombra]} onPress={navigation.navigate("Configuracao")}>
+          <TouchableOpacity style={[Styles.botao, Styles.sombra]} onPress={() =>navigation.navigate("Configuracao")}>
             <Text style={Styles.txtBotao}>Configuração</Text>
           </TouchableOpacity>
         </View>
