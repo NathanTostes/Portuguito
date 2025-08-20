@@ -9,10 +9,11 @@ import { collection, setDoc, doc, getDocs } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import styles from "../Styles.js/StylesTermoDeUso";
 import TextPolicyPrivacy from "./TextPolicyPrivacy";
+import { set } from "date-fns";
 
 
 export default function Cadastro() {
-  
+
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [confimarEmail, setConfirmarEmail] = useState("");
@@ -20,6 +21,7 @@ export default function Cadastro() {
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [souProfessor, setSouProfessor] = useState(false);
   const [urlImagemPerfil, setImagemPerfil] = useState("");
+  
 
   const [visible, setVisible] = useState(false);
   const auth = FIREBASE_AUTH;
@@ -229,11 +231,41 @@ export default function Cadastro() {
     console.log(regex.test(email))
     return regex.test(email);
   }
+  const validarSenha = (senha) => {
+
+    const regexUperCase = /^(?=.*[A-Z]).+$/;
+    const regexLowCase = /^(?=.*[a-z]).+$/;
+    const regexNumber = /^(?=.*[0-9]).+$/;
+    const regexSpecial = /^(?=.*[!@#$%^&*(),.?":{}|<>]).+$/;
+    const length = (senha || "").length >= 8;
+
+    const valida = {
+      case: regexUperCase.test(senha) && regexLowCase.test(senha),
+      number: regexNumber.test(senha),
+      length: length,
+      special: regexSpecial.test(senha),
+    };
+
+    return valida;
+  }
 
   function cadastrar() {
+    const validar=validarSenha(senha)
     if (!validarEmail(email)) {
       Alert.alert("Email inválido")
       return
+    }
+    if (Object.values(validar).includes(false)) {
+      Alert.alert(
+        "Senha inválida",
+        "A senha deve conter:\n\n" +
+        "• Pelo menos uma letra maiúscula\n" +
+        "• Pelo menos uma letra minúscula\n" +
+        "• Pelo menos um número\n" +
+        "• Pelo menos 8 caracteres\n" +
+        "• Pelo menos um caractere especial (!@#$%&* etc.)"
+      );
+      return;
     }
 
     if (
@@ -293,7 +325,7 @@ export default function Cadastro() {
             <TextInput
               style={Styles.input}
               contextMenuHidden={true}
-              onChangeText={(text) => setConfirmarSenha(text)}
+              onChangeText={(text) => setSenha(text)}
               secureTextEntry={true}
             />
           </View>
@@ -303,7 +335,7 @@ export default function Cadastro() {
             <TextInput
               style={Styles.input}
               contextMenuHidden={true}
-              onChangeText={(text) => setSenha(text)}
+              onChangeText={(text) => setConfirmarSenha(text)}
               secureTextEntry={true}
             />
           </View>
