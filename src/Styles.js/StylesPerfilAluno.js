@@ -11,7 +11,7 @@ export default StyleSheet.create({
         flex: 1,
         marginTop: 50,
         alignItems: 'center',
-        minHeight: height<700 ? height + 300: null
+        minHeight: height < 700 ? height + 300 : null
 
     },
 
@@ -260,7 +260,7 @@ export default StyleSheet.create({
     editIcon: {
         color: "#FFFFFF",
         fontSize: 27,
-        padding: 7.5,
+        padding: 6.5,
     },
     paginationButton: {
         width: 42,
@@ -277,7 +277,32 @@ export default StyleSheet.create({
         borderRadius: 10,
         marginTop: 20,
         position: 'absolute',
-        left: width*0.95,
+        left: width * 0.95,
         top: 10,
+    },
+    buttonProfile: {
+        backgroundColor: '#ff8c90',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        height: 40,
+        width: 40
+    },
+    editProfileIconFrame: {
+        zIndex: 1,
+        right: 0,
+        height: 40,
+        width: 40,
+        borderRadius: 25,
+        backgroundColor: "#ff8c90",
+    },
+    editProfileIcon: {
+        color: "#FFFFFF",
+        fontSize: 27,
+        padding: 6.5,
+    },
+    viewLogoutEdit: {
+        display: "flex",
+        flexDirection: "row"
     }
 })

@@ -106,4 +106,30 @@ export default StyleSheet.create({
         marginTop: 10,
         backgroundColor: "#ff8c90",
     },
+    buttonProfile: {
+        backgroundColor: '#ff8c90',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        height: 40,
+        width: 40,
+        marginTop: 20,
+    },
+    editProfileIconFrame: {
+        zIndex: 1,
+        right: 0,
+        height: 40,
+        width: 40,
+        borderRadius: 25,
+        backgroundColor: "#ff8c90",
+    },
+    editProfileIcon: {
+        color: "#FFFFFF",
+        fontSize: 27,
+        padding: 6.5,
+    },
+    viewLogoutEdit: {
+        display: "flex",
+        flexDirection: "row"
+    }
 })

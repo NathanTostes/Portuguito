@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import PerfilAluno from "../Views/PerfilAluno";
 import ProfileImage from "../Views/ProfileImage";
 import FormRate from "../Views/FormRate";
+import FormUpdate from "../Views/FormUpdate";
 
 import { useTabDisplay } from "../hooks/useTabDisplay"
 
@@ -21,6 +22,7 @@ export default function StackNavStudent({ navigation, route }) {
             <Stack.Screen name="PerfilAluno" component={PerfilAluno} />
             <Stack.Screen name="ProfileImage" component={ProfileImage} />
             <Stack.Screen name="Rate" component={FormRate} />
+            <Stack.Screen name="UpdateProfile" component={FormUpdate} />
         </Stack.Navigator>
     );
 }

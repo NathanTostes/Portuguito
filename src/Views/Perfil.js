@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 export default function Perfil() {
   const [usuario, setUsuario] = useState();
   const [modalLogoVisible, setModalLogoVisible] = useState(false);
-  
+
   const navigation = useNavigation();
 
   const logout = () => {
@@ -85,9 +85,9 @@ export default function Perfil() {
           visible={modalLogoVisible}
           onClose={() => setModalLogoVisible(false)}
         />
-        <TouchableOpacity style={Styles.editIconFrame} onPress={() => navigation.navigate("Rate")}>  
+        <TouchableOpacity style={Styles.editIconFrame} onPress={() => navigation.navigate("Rate")}>
           {/* <Text style={Styles.txtBotao}>Avaliar</Text> */}
-            <AntDesign name="notification" style={Styles.editIcon} />
+          <AntDesign name="notification" style={Styles.editIcon} />
         </TouchableOpacity>
         <TouchableOpacity
           style={Styles.logoContainer}
@@ -102,9 +102,22 @@ export default function Perfil() {
         <View style={Styles.backgroundUser}>
           <Image style={Styles.image} source={require("../Imagens/profile/profileBase.jpg")} />
         </View>
-        <TouchableOpacity style={[Styles.botao, Styles.sombra]} onPress={() => logout()}>
-          <Text style={Styles.txtBotao}>Sair</Text>
-        </TouchableOpacity>
+        <View style={Styles.viewLogoutEdit}>
+          <TouchableOpacity
+            style={[Styles.botao, Styles.sombra, { height: 40, marginRight: 5 }]}
+            onPress={() => logout()}
+          >
+            <Text style={Styles.txtBotao}>Sair</Text>
+          </TouchableOpacity>
+          <View style={Styles.buttonProfile}>
+            <TouchableOpacity
+              style={Styles.editProfileIconFrame}
+              onPress={() => navigation.navigate("UpdateProfile")}
+            >
+              <AntDesign name="edit" style={Styles.editProfileIcon} />
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={Styles.containerFilho}>
           <View style={Styles.input}>
             <Text style={Styles.txtInput}>Nome: {usuario ? usuario.nome : ""}</Text>
