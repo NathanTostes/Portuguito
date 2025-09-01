@@ -90,7 +90,7 @@ export default function Home() {
               autoCorrect={false}
               autoComplete="off"
               autoCompleteType="off"
-              keyboardType="visible-password"
+
               contextMenuHidden={true}
               onChangeText={(text) => setSenha(text)}
               secureTextEntry={true}
