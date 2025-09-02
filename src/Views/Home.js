@@ -8,9 +8,13 @@ import { FIREBASE_AUTH } from "../../FirebaseConfig";
 
 export default function Home() {
 
+
+
   const signIn = async (auth, email, senha) => {
     try {
+
       await signInWithEmailAndPassword(auth, email, senha)
+
 
     } catch (error) {
       console.log(error)
@@ -18,11 +22,20 @@ export default function Home() {
         Alert.alert('Formato de email inválido')
       }
       else if (error.code === "auth/user-not-found") {
+
         Alert.alert('Email incorreto')
       }
       else if (error.code === "auth/wrong-password") {
         Alert.alert('Senha incorreta')
       }
+      else if (error.code === "auth/too-many-requests") {
+        Alert.alert(
+          "Acesso bloqueado",
+          "Foram detectadas muitas tentativas de login sem sucesso. Por segurança, sua conta está temporariamente bloqueada.\n\nAguarde alguns minutos e tente novamente ou utilize a opção de redefinição de senha.",
+          [{ text: "OK" }]
+        );
+      }
+
     }
   }
 
