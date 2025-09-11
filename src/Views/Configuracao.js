@@ -47,6 +47,8 @@ export default function Configuracao() {
         fetchUserData();
     }, []);
 
+    
+
     async function deleteConta(id) {
 
         try {

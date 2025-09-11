@@ -48,6 +48,12 @@ export default function EditarConfig() {
         fetchUserData();
     }, []);
 
+    const validarEmail = (email) => {
+    const regex = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
+    console.log(regex.test(email))
+    return regex.test(email);
+  }
+
     const handleSubmit = async () => {
         try {
             if (!oldData.id) {
@@ -71,6 +77,10 @@ export default function EditarConfig() {
             }
             if(nome===null || nome===""){
                 Alert.alert("Erro", "Nome Invalido.");
+                return;
+            }
+            if(!validarEmail(email)){
+                Alert.alert("Email inválido")
                 return;
             }
 
