@@ -112,6 +112,7 @@ export default function TabNavAluno() {
             }}
 
             />
+            
 
         </Tab.Navigator>
     )

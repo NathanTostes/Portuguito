@@ -14,6 +14,12 @@ export default StyleSheet.create({
         marginTop: 5,
 
     },
+    containerFilho2:{
+        flexDirection:"column",
+        marginTop: 5,
+        marginLeft:5,
+
+    },
     descricao:{
         color: '#fff',
         fontFamily: 'Inder_400Regular',
@@ -101,6 +107,14 @@ export default StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         left: 20
+    },
+    txtTituloPrincipal:{
+        color: '#ff8c90',
+        padding: 2,
+        fontFamily: 'Inder_400Regular',
+        fontSize: 25,
+        paddingHorizontal:5,
+        
     },
     txtProfessor:{
         fontFamily: 'Inder_400Regular',
