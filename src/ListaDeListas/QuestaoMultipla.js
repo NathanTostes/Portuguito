@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, Text, Modal, ActivityIndicator } from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { View, TouchableOpacity, Text, Modal, ActivityIndicator, BackHandler, Alert } from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import Markdown from "react-native-markdown-display";
@@ -9,8 +9,13 @@ import { FIREBASE_APP } from "../../FirebaseConfig";
 import styles from "../QuestionStyles/StyleQuestaoMultipla";
 import { RadioButtonGroup, RadioButtonItem } from "../Componentes/RadioButtonGroup";
 import LoadingScreen from "../Componentes/LoadingScreen";
+import { Ionicons } from "@expo/vector-icons";
+import areas from "../data/areas";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function QuestaoMultipla({ route, navigation }) {
+    
+    const time = 30 - areas[route.params.area].tempoDecrescido + route.params.character.extraTime;
 
     const [question, setQuestion] = useState(null);
     const [showInitialAnimation, setShowInitialAnimation] = useState(true);
@@ -19,8 +24,33 @@ export default function QuestaoMultipla({ route, navigation }) {
     const [btnRadioClicado, setbtnRadioClicado] = useState(true);
     const [noImage, setNoImage] = useState(null);
     const [loadingImage, setLoadingImage] = useState(true);
+    const [timeLeft, setTimeLeft] = useState(time);
 
     const db = getFirestore(FIREBASE_APP);
+
+    useFocusEffect (
+        useCallback(() => {
+            const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+                Alert.alert(
+                    "Sair da Batalha",  
+                    "Tem certeza de que deseja abandonar a batalha? Você perderá todo o progresso da aventura.",
+                    [
+                        { text: "Cancelar", style: "cancel" },
+                        {
+                            text: "Abandonar Aventura",
+                            style: "destructive",
+                            onPress: () => navigation.navigate("MenuAdventure", {
+                                screen: "MenuAdventure ",
+                            })
+                        },
+                    ]
+                );
+                return true;
+            });
+
+            return () => backHandler.remove();
+        }, [])
+    );
 
     useEffect(() => {
         const fetchRandomQuestion = async () => {
@@ -64,15 +94,43 @@ export default function QuestaoMultipla({ route, navigation }) {
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        if (!loadingImage && question) {
+            setTimeLeft(time);
+            const interval = setInterval(() => {
+                setTimeLeft(prev => {
+                    if (prev <= 1) {
+                        clearInterval(interval);
+                        navigation.navigate("Battle", {
+                            area: route.params.area,
+                            faseInfo: route.params.faseInfo,
+                            characterInfo: route.params.character,
+                            faseNumber: route.params.faseNumber,
+                            enemyIndex: route.params.enemyIndex,
+                            hitSuccess: false,
+                            loseByTime: true,
+                        });
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+
+            return () => clearInterval(interval);
+        }
+    }, [loadingImage, question]);
+
     const handleConfirm = () => {
         const acertou = selectedAnswer === question.respostaCorreta;
 
         navigation.navigate("Battle", {
+            area: route.params.area,
             faseInfo: route.params.faseInfo,
             characterInfo: route.params.character,
-            currentFase: route.params.currentFase,
-            hitSuccess: acertou,
+            faseNumber: route.params.faseNumber,
             enemyIndex: route.params.enemyIndex,
+            hitSuccess: acertou,
+            loseByTime: false,
         });
     };
 
@@ -82,6 +140,22 @@ export default function QuestaoMultipla({ route, navigation }) {
             {question && !showInitialAnimation ? (
                 <>
                     <View style={styles.container}>
+                        <View style={{ flexDirection: "row", alignItems: "center", margin: 30 }}>
+                            <Ionicons name="time-outline" size={24} color="#fff" style={{ marginRight: 8 }} />
+                            <View style={{ flex: 1, height: 12, backgroundColor: "#ccc", borderRadius: 6 }}>
+                                <View
+                                    style={{
+                                        height: "100%",
+                                        width: `${(timeLeft / time) * 100}%`,
+                                        backgroundColor: "#3498db",
+                                        borderRadius: 6,
+                                    }}
+                                />
+                            </View>
+                            <Text style={{ color: "#fff", marginLeft: 8, fontFamily: "Inder_400Regular" }}>
+                                {timeLeft}s
+                            </Text>
+                        </View>
                         <View style={styles.enunciado}>
                             <View style={styles.backgroundImagem}>
                                 {loadingImage ? (

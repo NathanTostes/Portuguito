@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -13,36 +13,33 @@ import {
 import Styles from "../Styles.js/StyleAdventureFases.js";
 import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import enemies from '../data/enemies';
+import areas from '../data/areas.js';
 
 export default function AdventureFases() {
     const navigation = useNavigation();
     const route = useRoute();
     const { characterInfo, currentFase } = route.params;
 
-    const [page, setPage] = useState(0);
-    const fasesPerPage = 3;
-    const totalFases = enemies.length;
+    const [area, setArea] = useState(0);
 
-    // Estados dos modais
     const [modalVisible, setModalVisible] = useState({
         life: false,
         damage: false,
         extraTime: false
     });
 
-    const backgrounds = [
-        require("../Imagens/adventure/area1background1.png"),  
-        require("../Imagens/adventure/area2background1.png"),
-        require("../Imagens/adventure/area2background1.png"),
-        require("../Imagens/adventure/area2background1.png"),
-    ];    
-
     const colors = {  
         life: { bg: "#e74c3c", border: "#b2312b" },
         damage: { bg: "rgba(255, 128, 49, 1)", border: "#d67119ff" },
         extraTime: { bg: "#3498db", border: "#2a75b0" },
     };
+
+    useEffect(() => {
+        navigation.navigate("ItemShop", {
+            characterInfo,
+            currentFase
+        });
+    }, [currentFase]);
 
     useFocusEffect(
         useCallback(() => {
@@ -66,20 +63,24 @@ export default function AdventureFases() {
         }, [])
     );
 
-    const FreeFased = ({ txt, faseInfo, characterInfo, currentFase }) => (
+    const FreeFased = ({ txt, faseInfo, characterInfo, area, enemyIndex, faseNumber }) => (
         <TouchableOpacity
             style={Styles.boxImageButton}
-            onPress={() => navigation.navigate("Battle", { faseInfo, characterInfo, currentFase })}
+            onPress={() => navigation.navigate("Battle", { txt, faseInfo, characterInfo, area, enemyIndex, faseNumber })}
         >
-            <Image style={Styles.boxImageImage} source={require("../Imagens/icone_13.png")} />
+            <Image style={Styles.boxImageImage} source={areas[area].icon || areas[0].icon} />
             <Text style={Styles.boxImageButtonText}>{txt}</Text>
         </TouchableOpacity>
     );
 
     const ClosedFased = ({ txt }) => (
-        <TouchableOpacity style={Styles.boxImageButton} activeOpacity={1}>
-            <Image source={require("../Imagens/icone_14.png")} style={Styles.boxImageImage} />
-            <Text style={Styles.boxImageButtonText}>{txt}</Text>
+        <TouchableOpacity style={[Styles.boxImageButton]} activeOpacity={1}>
+            <Image
+                source={areas[area].icon || areas[0].icon}
+                style={Styles.boxImageImage}
+            />
+            <Image source={areas[area].icon || areas[0].icon} style={[Styles.boxImageImage, Styles.closedFaseIcon]} />
+            <Text style={[Styles.boxImageButtonText, Styles.closedFaseText]}>{txt}</Text>
         </TouchableOpacity>
     ); 
 
@@ -111,7 +112,7 @@ export default function AdventureFases() {
     return (
         <ImageBackground
             style={Styles.imageAjust}
-            source={backgrounds[page] || backgrounds[0]}
+            source={areas[area].backgroundArea || areas[0].backgroundArea}
         >
             <View style={Styles.topBar}>
                 <TouchableOpacity
@@ -148,24 +149,35 @@ export default function AdventureFases() {
                 </TouchableOpacity>
             </View>
 
-            {enemies.slice(page * fasesPerPage, (page + 1) * fasesPerPage).map((faseInfo, i) => {
-                const faseNumber = page * fasesPerPage + i + 1;
-                const unlocked = faseNumber === currentFase;
+            <View style={Styles.paginationContainer}>
+                {area < areas.length - 1 && (
+                    <TouchableOpacity
+                        style={Styles.paginationButton}
+                        onPress={() => {
+                            setArea(area + 1);
+                        }}
+                    >
+                        <Ionicons name="arrow-up" style={Styles.iconStyle} />
+                    </TouchableOpacity>
+                )}
+            </View>
 
-                let ajustStyle = Styles.AjustItens_high;
-                if (i % 3 === 1) ajustStyle = Styles.AjustItens_center;
-                else if (i % 3 === 2) ajustStyle = Styles.AjustItens_low;
+            {areas[area].fases.map((fase, i) => {
+                const faseNumber = area * 3 + i + 1;
+                const unlocked = faseNumber === currentFase;
 
                 return (
                     <View key={faseNumber} style={Styles.box}>
-                        <View style={ajustStyle}>
+                        <View style={[Styles.pageIcon, { ...areas[area].iconPositions[i] }]}>
                             <View style={Styles.boxImage}>
-                                {unlocked ? (
+                                { unlocked ? (
                                     <FreeFased
                                         txt={faseNumber}
-                                        faseInfo={faseInfo}
+                                        faseInfo={fase}
                                         characterInfo={characterInfo}
-                                        currentFase={currentFase}
+                                        area={area}
+                                        enemyIndex={i}
+                                        faseNumber={faseNumber}
                                     />
                                 ) : (
                                     <ClosedFased txt={faseNumber} />
@@ -176,29 +188,14 @@ export default function AdventureFases() {
                 );
             })}
 
-            <View style={Styles.paginationContainer}>
-                {(page + 1) * fasesPerPage < totalFases && (
-                    <TouchableOpacity
-                        style={Styles.paginationButton}
-                        onPress={() => {
-                            const lastFaseIndexOnPage = (page + 1) * fasesPerPage;
-                            const requiredFaseToAdvance = lastFaseIndexOnPage;
-
-                            if (true) {
-                            // if (currentFase >= requiredFaseToAdvance) {
-                                setPage(page + 1);
-                            } else {
-                                Alert.alert(
-                                    "Espere aí",
-                                    `Você precisa passar pela última batalha dessa área para avançar até a próxima!`
-                                );
-                            }
-                        }}
-                    >
-                        <Ionicons name="arrow-down" style={Styles.iconStyle} />
-                    </TouchableOpacity>
-                )}
-            </View>
+            {area > 0 && (
+                <TouchableOpacity
+                    style={Styles.paginationButton}
+                    onPress={() => setArea(area - 1)}
+                >
+                    <Ionicons name="arrow-down" style={Styles.iconStyle} />
+                </TouchableOpacity>
+            )}
 
             {renderModal('life', 'Vida representa quantos pontos de vida seu personagem possui. Se chegar a zero, ele é derrotado.')}
             {renderModal('damage', 'Dano é o quanto de dano seu personagem causa aos inimigos em cada ataque.')}

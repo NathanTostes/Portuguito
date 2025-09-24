@@ -3,19 +3,16 @@ import { View, Text, ImageBackground, TouchableOpacity, Image, BackHandler, Aler
 import Styles from "../Styles.js/StyleBattle.js";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
+import areas from "../data/areas.js";
 
 export default function Battle({ route, navigation }) {
-    const { faseInfo, characterInfo, currentFase } = route.params;
+    const { faseInfo, characterInfo, area, faseNumber } = route.params;
 
     const [enemies, setEnemies] = useState(
-        faseInfo.map(e => ({ ...e, vidaMax: e.vida }))
+        faseInfo.enemies.map(e => ({ ...e, vidaMax: e.vida }))
     );
+
     const [character, setCharacter] = useState(characterInfo);
-    
-    const backgrounds = [
-        require("../Imagens/adventure/area1background2.png"),
-        require("../Imagens/adventure/area2background1.png"),
-    ];
 
     const colors = {
         life: { bg: "#27ae60", border: "#1e8449" },
@@ -47,32 +44,36 @@ export default function Battle({ route, navigation }) {
         }, [])
     );
        
-    useEffect(() => { 
-        if (route.params?.hitSuccess !== undefined && route.params?.enemyIndex !== undefined) {
-            const index = route.params.enemyIndex;
-            const updatedEnemies = [...enemies];
+    useEffect(() => {
+        if (route.params) {
+            const { hitSuccess, enemyIndex } = route.params;
+            if (hitSuccess !== undefined && enemyIndex !== undefined) {
+                const updatedEnemies = [...enemies];
 
-            if (route.params.hitSuccess) {
-                updatedEnemies[index].vida -= character.damage;
-            } else {
-                setCharacter(prev => ({
-                    ...prev,
-                    life: prev.life - updatedEnemies[index].dano
-                }));
+                if (hitSuccess) {
+                    updatedEnemies[enemyIndex].vida -= character.damage;
+                } else {
+                    setCharacter(prev => ({
+                        ...prev,
+                        life: prev.life - updatedEnemies[enemyIndex].dano
+                    }));
+                }
+
+                const filteredEnemies = updatedEnemies.filter(enemy => enemy.vida > 0);
+                setEnemies(filteredEnemies);
             }
-
-            const filteredEnemies = updatedEnemies.filter(enemy => enemy.vida > 0);
-            setEnemies(filteredEnemies);
-
-            navigation.setParams({ hitSuccess: undefined, enemyIndex: undefined });
         }
-    }, [route.params?.hitSuccess]);
+    }, [route.params]);
 
     useEffect(() => {
         if (character.life <= 0) {
-            navigation.navigate("LoseAdventure", { fase: currentFase });
+            navigation.navigate("LoseAdventure", { fase: faseNumber });
         } else if (enemies.length === 0) {
-            navigation.navigate("WinAdventure", { characterInfo: character, nextFase: currentFase + 1 });
+            if (faseNumber + 1 >= 22) {
+                navigation.navigate("WinAndEndAdventure");
+            } else {
+                navigation.navigate("WinAdventure", { characterInfo: character, nextFase: (faseNumber + 1) });
+            }
         }
     }, [character.life, enemies]);
 
@@ -81,29 +82,23 @@ export default function Battle({ route, navigation }) {
         const randomType = types[Math.floor(Math.random() * types.length)];
 
         navigation.navigate(`Questao${randomType}`, {
+            area,
             faseInfo,
             character,
-            currentFase,
             enemyIndex: index,
+            faseNumber,
         })
     };
 
     const Enemy = ({ enemy, index }) => {
-        const positions = [
-            { top: 70, right: 45 },
-            { top: 200, right: 150 },
-            { top: 260, right: -50 },
-        ];
-
         const vidaPercent = Math.max(0, (enemy.vida / enemy.vidaMax) * 100);
 
         return (
             <TouchableOpacity
-                style={[Styles.boxImageButton, { position: 'absolute', ...positions[index] }]}
+                style={[Styles.boxImageButton, { position: 'absolute', ...areas[area].enemyPositions[index] }]}
                 onPress={() => attackEnemy(index)}
             >
-                <Image style={Styles.boxImageImage} source={enemy.imagem} />  
-
+                <Image style={Styles.boxImageImage} source={enemy.imagem} />
                 <View style={Styles.lifeBarContainer}>
                     <View style={[Styles.lifeBarFill, { width: `${vidaPercent}%` }]} />
                 </View>
@@ -111,19 +106,11 @@ export default function Battle({ route, navigation }) {
         );
     };
 
-    const getBackground = () => {
-        if (currentFase >= 4) {
-            return require("../Imagens/adventure/area2background1.png");
-
-        }
-        return require("../Imagens/adventure/area1background2.png");
-    };
-
 
     return (
         <ImageBackground
             style={Styles.imageAjust}
-            source={getBackground()}
+            source={areas[area].backgroundBattle || areas[area].backgroundBattle[0]}
         >
             <View style={Styles.topBar}>
                 <View
@@ -172,7 +159,7 @@ export default function Battle({ route, navigation }) {
                     <View style={Styles.boxImage}>
                         <Image
                             style={Styles.boxImagePortuguita}
-                            source={require('../Imagens/adventure/portuguitaBack.png')}
+                            source={characterInfo.imagemBack}
                         />
                     </View>
                 </View>

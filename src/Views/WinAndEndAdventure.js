@@ -4,31 +4,31 @@ import { View, Text, TouchableOpacity, BackHandler } from 'react-native';
 import { Image } from 'expo-image';
 import styles from "../Styles.js/StyleEndAdventure.js";
 import { useFocusEffect } from '@react-navigation/native';
-import { doc, getDocs, collection, updateDoc, setDoc, query, where, getDoc } from "firebase/firestore";
+import { doc, getDocs, collection, updateDoc, setDoc, getDoc } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { FIREBASE_APP, FIREBASE_AUTH } from "../../FirebaseConfig.js";
 
-export default function LoseAdventure({ route, navigation }) {
-    const { fase } = route.params;
+export default function WinAndEndAdventure({ route, navigation }) {
+    const fase = 22;
     const [coinsGained, setCoinsGained] = useState(0);
+    const [totalCoins, setTotalCoins] = useState(0);
 
     const db = getFirestore(FIREBASE_APP);
     const auth = FIREBASE_AUTH;
     const userId = auth.currentUser.uid;
 
     useEffect(() => {
-        const updateProgress = async () => {
+        const addCoinsAndUpdateRanking = async () => {
             try {
                 const userRef = doc(db, "users", userId);
                 const adventureInfoCollectionRef = collection(userRef, "adventureInfo");
                 const snapshot = await getDocs(adventureInfoCollectionRef);
 
-                let newTotalCoins = 0;
                 if (!snapshot.empty) {
                     const adventureDoc = snapshot.docs[0];
                     const data = adventureDoc.data();
-                    const coinsToAdd = (5 * (fase - 3)) + 15 * Math.floor((fase - 1) / 3);
-                    newTotalCoins = (data.coins || 0) + coinsToAdd;
+                    const coinsToAdd = 500;
+                    const newTotalCoins = (data.coins || 0) + coinsToAdd;
 
                     await updateDoc(adventureDoc.ref, {
                         coins: newTotalCoins,
@@ -36,6 +36,7 @@ export default function LoseAdventure({ route, navigation }) {
                     });
 
                     setCoinsGained(coinsToAdd);
+                    setTotalCoins(newTotalCoins);
                 }
 
                 const rankingDocRef = doc(db, "AdventureRanking", userId);
@@ -51,11 +52,11 @@ export default function LoseAdventure({ route, navigation }) {
                 }
 
             } catch (error) {
-                console.error("Erro ao atualizar progresso e ranking:", error);
+                console.error("Erro ao atualizar moedas e ranking:", error);
             }
         };
 
-        updateProgress();
+        addCoinsAndUpdateRanking();
     }, [userId]);
 
     useFocusEffect(
@@ -74,11 +75,11 @@ export default function LoseAdventure({ route, navigation }) {
     return (
         <LinearGradient colors={['#D5D4FB', '#9B98FC']} style={styles.gradient}>
             <View style={styles.container}>
-                <Text style={styles.title}>Você foi derrotado na fase {fase}!</Text>
+                <Text style={styles.title}>Você completou o desafio!</Text>
                 <View style={styles.boxImage}>
                     <Image
                         style={styles.ImageFormat}
-                        source={require("../Imagens/animations/AnimacoesMascoteErrouMaioria.gif")}
+                        source={require("../Imagens/animations/AnimacoesMascoteAcertatudo.gif")}
                     />
                 </View>
                 {coinsGained > 0 &&
@@ -91,7 +92,7 @@ export default function LoseAdventure({ route, navigation }) {
                     onPress={() => navigation.navigate("MenuAdventure")}
                 >
                     <Text style={[styles.FontFormatButtom, styles.shadow]}>
-                        Retornar ao menu
+                        Voltar ao menu
                     </Text>
                 </TouchableOpacity>
             </View>

@@ -1,49 +1,92 @@
-import React from "react"; 
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Alert } from "react-native";
 import Styles from "../Styles.js/StyleAdventureRanking";
 import { useNavigation } from "@react-navigation/native";
+import { getFirestore, collection, getDocs, doc, getDoc } from "firebase/firestore";
+import { FIREBASE_APP, FIREBASE_AUTH } from "../../FirebaseConfig.js";
+import { onAuthStateChanged } from "firebase/auth";
 
-const DUMMY_RANKING_DATA = [
-    { userId: 'user001', userName: 'Beatriz Costa', fasesConcluidas: 25, position: 1 },
-    { userId: 'user002', userName: 'Lucas Martins', fasesConcluidas: 23, position: 2 },
-    { userId: 'user003', userName: 'Juliana Alves', fasesConcluidas: 22, position: 3 },
-    { userId: 'my_user_id', userName: 'Você (Léo)', fasesConcluidas: 20, position: 4 },
-    { userId: 'user005', userName: 'Fernanda Lima', fasesConcluidas: 18, position: 5 },
-    { userId: 'user006', userName: 'Rafael Oliveira', fasesConcluidas: 15, position: 6 },
-    { userId: 'user007', userName: 'Patrícia Souza', fasesConcluidas: 14, position: 7 },
-    { userId: 'user008', userName: 'Thiago Pereira', fasesConcluidas: 12, position: 8 },
-    { userId: 'user009', userName: 'Gabriela Santos', fasesConcluidas: 11, position: 9 },
-    { userId: 'user010', userName: 'Márcio Ferreira', fasesConcluidas: 10, position: 10 },
-];
-
-const CURRENT_USER_ID = 'my_user_id';
-
-const RankingRow = ({ position, nome, fasesConcluidas, isUser = false }) => {
-    return (
-        <TouchableOpacity
-            onPress={() => {
-                if (isUser) {
-                    Alert.alert("Ação", "Você clicou na sua própria linha.");
-                    return;
-                }
-                Alert.alert("Visualizar Perfil", `Isso navegaria para o perfil de ${nome}.`);
-            }}
-            style={[
-                Styles.row,
-                isUser && { backgroundColor: "#E89CA3" },
-            ]}
-        >
-            <Text style={[Styles.cell, Styles.positionCell]}>{position}</Text>
-            <Text style={[Styles.cell, Styles.nameCell]}>{nome}</Text>
-            <Text style={Styles.cell}>{fasesConcluidas}</Text>
-        </TouchableOpacity>
-    );
-};
+const RankingRow = ({ position, nome, fasesConcluidas, isUser = false }) => (
+    <TouchableOpacity
+        onPress={() => {
+            if (isUser) {
+                Alert.alert("Ação", "Você clicou na sua própria linha.");
+                return;
+            }
+            Alert.alert("Visualizar Perfil", `Isso navegaria para o perfil de ${nome}.`);
+        }}
+        style={[
+            Styles.row,
+            isUser && { backgroundColor: "#E89CA3" },
+        ]}
+    >
+        <Text style={[Styles.cell, Styles.positionCell]}>{position}</Text>
+        <Text style={[Styles.cell, Styles.nameCell]}>{nome}</Text>
+        <Text style={Styles.cell}>{fasesConcluidas}</Text>
+    </TouchableOpacity>
+);
 
 export default function AdventureRanking() {
     const navigation = useNavigation();
+    const db = getFirestore(FIREBASE_APP);
 
-    const currentUserData = DUMMY_RANKING_DATA.find(user => user.userId === CURRENT_USER_ID);
+    const [rankingData, setRankingData] = useState([]);
+    const [currentUserData, setCurrentUserData] = useState(null);
+    const [currentUserId, setCurrentUserId] = useState(null);
+
+    // 🔹 Captura o usuário autenticado
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
+            if (user) {
+                setCurrentUserId(user.uid);
+            } else {
+                setCurrentUserId(null);
+            }
+        });
+        return unsubscribe;
+    }, []);
+
+    // 🔹 Só busca ranking depois de ter o usuário
+    useEffect(() => {
+        if (!currentUserId) return;
+
+        const fetchRanking = async () => {
+            try {
+                const rankingSnapshot = await getDocs(collection(db, "AdventureRanking"));
+                const usersWithProgress = [];
+
+                for (const docSnap of rankingSnapshot.docs) {
+                    const rankingData = docSnap.data();
+                    if ((rankingData.lastFaseCompleted || 0) > 0) {
+
+                        const userDoc = await getDoc(doc(db, "users", rankingData.userId));
+                        const userName = userDoc.exists() ? userDoc.data().nome : "Sem nome";
+
+                        usersWithProgress.push({
+                            userId: rankingData.userId,
+                            userName,
+                            fasesConcluidas: rankingData.lastFaseCompleted
+                        });
+                    }
+                }
+
+                usersWithProgress.sort((a, b) => b.fasesConcluidas - a.fasesConcluidas);
+                const rankedData = usersWithProgress.map((user, index) => ({
+                    ...user,
+                    position: index + 1
+                }));
+
+                setRankingData(rankedData);
+                const currentUser = rankedData.find(user => user.userId === currentUserId);
+                setCurrentUserData(currentUser || null);
+
+            } catch (error) {
+                console.error("Erro ao buscar ranking:", error);
+            }
+        };
+
+        fetchRanking();
+    }, [currentUserId]);
 
     return (
         <View style={Styles.container}>
@@ -54,17 +97,17 @@ export default function AdventureRanking() {
             <View style={Styles.tableHeader}>
                 <Text style={[Styles.cell, Styles.columnHeader]}>Posição</Text>
                 <Text style={[Styles.cell, Styles.nameCell, Styles.columnHeader]}>Aluno</Text>
-                <Text style={[Styles.cell, Styles.columnHeader]}>{`Mundos\nCompletos`}</Text>
+                <Text style={[Styles.cell, Styles.columnHeader]}>{`Fases\nCompletas`}</Text>
             </View>
 
             <ScrollView style={Styles.scrollContainer} persistentScrollbar={true}>
-                {DUMMY_RANKING_DATA.map((item) => (
+                {rankingData.map((item) => (
                     <RankingRow
                         key={item.userId}
                         position={item.position}
                         nome={item.userName}
                         fasesConcluidas={item.fasesConcluidas}
-                        isUser={item.userId === CURRENT_USER_ID}
+                        isUser={item.userId === currentUserId}
                     />
                 ))}
             </ScrollView>

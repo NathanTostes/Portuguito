@@ -99,9 +99,9 @@ export default StyleSheet.create({
         width: '100%',
         flex: 1,
         position: "absolute",
+        top: 80,
         left: 150,
         flexDirection: 'row',
-
     },
 
     AjustItens_low: {
@@ -199,7 +199,7 @@ export default StyleSheet.create({
         borderColor: '#000',
         borderWidth: 1,
         borderRadius: 4,
-        bottom: 60,
+        bottom: 85,
         overflow: 'hidden',
     },
 

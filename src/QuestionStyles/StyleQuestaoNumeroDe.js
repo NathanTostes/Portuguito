@@ -59,7 +59,7 @@ export default StyleSheet.create({
         backgroundColor: '#ff8c90',
         height: 'auto',
         width: 300,
-        marginTop: 200,
+        marginTop: 40,
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center'

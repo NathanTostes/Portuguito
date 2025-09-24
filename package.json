@@ -1,6 +1,6 @@
 {
   "name": "telas",
-  "version": "4.2.1",
+  "version": "5.0.3",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -20,7 +20,7 @@
     "@types/react": "~19.0.10",
     "babel-plugin-module-resolver": "^5.0.2",
     "date-fns": "^3.3.1",
-    "expo": "^53.0.20",
+    "expo": "53.0.22",
     "expo-build-properties": "~0.14.6",
     "expo-clipboard": "~7.1.4",
     "expo-image": "~2.4.0",

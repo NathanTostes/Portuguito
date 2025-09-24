@@ -2,7 +2,7 @@
   "expo": {
     "name": "Portuguito",
     "slug": "Portuguito",
-    "version": "4.2.1",
+    "version": "5.0.3",
     "orientation": "portrait",
     "icon": "./assets/portuguitaBase.png",
     "userInterfaceStyle": "light",
@@ -25,7 +25,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.Portuguito",
-      "versionCode": 19
+      "versionCode": 23
     },
     "web": {
       "favicon": "./assets/favicon.png"

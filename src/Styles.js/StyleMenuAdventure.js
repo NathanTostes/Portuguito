@@ -43,7 +43,7 @@ export default StyleSheet.create({
 
   personagem: {
     alignItems: "center",
-    marginHorizontal: 20,
+    marginHorizontal: 1,
   },
 
   imagemPersonagem: {

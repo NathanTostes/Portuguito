@@ -83,39 +83,6 @@ export default StyleSheet.create({
         flexDirection: 'row',
     },
 
-    AjustItens_high: {
-        height: '100%',
-        width: '100%',
-        flex: 1,
-        position: 'absolute',
-        left: 40,
-        top: 40,
-        flexDirection: 'row',
-
-    },
-
-    AjustItens_center: {
-        height: '100%',
-        width: '100%',
-        flex: 1,
-        position: "absolute",
-        right: 50,
-        bottom: 50,
-        flexDirection: 'row',
-
-    },
-
-    AjustItens_low: {
-        height: '100%',
-        width: '100%',
-        flex: 1,
-        position: "absolute",
-        left: 200,
-        bottom: 120,
-        flexDirection: 'row',
-
-    },
-
     boxImage: {
         height: '100%',
         width: '40%',
@@ -125,14 +92,14 @@ export default StyleSheet.create({
     },
 
     boxImageImage: {
-        height: 120,
-        width: 120,
+        height: 260,
+        width: 260,
         resizeMode: "contain",
     },
 
     boxImageButton: {
-        height: 120,
-        width: 120,
+        height: 260,
+        width: 260,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -141,7 +108,11 @@ export default StyleSheet.create({
         color: '#fff',
         fontSize: 16,
         position: 'absolute',
-        top: 94,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+        backgroundColor: "rgba(255, 140, 144, 0.5)",
+        top: 180,
         fontFamily: 'Inder_400Regular',
 
     },
@@ -155,11 +126,12 @@ export default StyleSheet.create({
     },
 
     paginationButton: {
+        zIndex: 999,
         width: 50,
         height: 50,
         borderRadius: 25,
         marginBottom: 10,
-        backgroundColor: "#ff8c90",
+        backgroundColor: "rgba(255, 140, 144, 0.5)",
         justifyContent: "center",
         alignItems: "center",
     },
@@ -221,5 +193,23 @@ export default StyleSheet.create({
         fontSize: 16,
     },
 
+    pageIcon: {
+        height: '100%',
+        width: '100%',
+        flex: 1,
+        position: 'absolute',
+        flexDirection: 'row',
+    },
+
+    closedFaseIcon: {
+        tintColor: "black",
+        position: "absolute",
+        opacity: 0.6
+    },
+
+    closedFaseText: {
+        opacity: 0.5,
+        backgroundColor: "#00000077",
+    },
 
 });

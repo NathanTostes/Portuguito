@@ -1,4 +1,5 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+const {width, height} = Dimensions.get("window")
 
 export default StyleSheet.create({
     gradient: {
@@ -60,6 +61,7 @@ export default StyleSheet.create({
         height: 'auto',
         width: 300,
         marginTop: 60,
+        left:width*0.12,
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center'
@@ -78,7 +80,7 @@ export default StyleSheet.create({
         color: '#fff',
         top: 0,
         width: '90%',
-        left: 5,
+        left: width*0.125,
         padding: 10,
         textAlign: 'left',
         fontFamily: 'Inder_400Regular',
@@ -155,6 +157,7 @@ export default StyleSheet.create({
         width: 300,
         height: 45,
         alignItems: 'center',
+        left: width*0.12,
         justifyContent: 'center',
         borderRadius: 20,
         marginVertical: 20
