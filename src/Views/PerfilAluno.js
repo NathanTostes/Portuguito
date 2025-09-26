@@ -251,6 +251,14 @@ export default function PerfilAluno() {
             <AntDesign name="notification" style={Styles.editIcon} />
           </TouchableOpacity>
         </View>
+        <View style={Styles.buttonRate2}>
+          <TouchableOpacity
+            style={Styles.editIconFrame}
+            onPress={() => navigation.navigate("Ajuda")}
+          >
+            <AntDesign name="question" style={Styles.editIcon2} />
+          </TouchableOpacity>
+        </View>
 
         <View style={Styles.containerBotoes}>
           <TouchableOpacity
@@ -272,7 +280,7 @@ export default function PerfilAluno() {
         <View style={Styles.containerFilho}>
           <View style={Styles.viewOptions}>
             <Text style={Styles.txtInput}>
-              Nome: {user ? user.nome : ""}
+              Apelido: {user ? user.nome : ""}
             </Text>
           </View>
         </View>
