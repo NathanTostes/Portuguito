@@ -2,6 +2,8 @@ import React from "react";
 import { useFonts, Inder_400Regular } from "@expo-google-fonts/inder"
 import Navegacao from "./src/Navegacao";
 import { UserProvider } from "./src/Contexts/auth";
+import { CopilotProvider } from "react-native-copilot";
+
 
 export default function App() {
   const [fontLoaded] = useFonts({
@@ -15,8 +17,10 @@ export default function App() {
 
   return (
     //O UserProvider é usado para fornecer o valor atual do usuário para qualquer componente dentro da aplicação
-    <UserProvider>
-      <Navegacao />
-    </UserProvider>
+    <CopilotProvider isExclusive={true}>
+      <UserProvider>
+        <Navegacao />
+      </UserProvider>
+    </CopilotProvider>
   );
 }
