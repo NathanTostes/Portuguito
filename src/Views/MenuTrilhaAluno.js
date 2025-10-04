@@ -22,7 +22,7 @@ export default function MenuTrilha() {
       if (route.params?.iniciarTutorial) {
         
         setTimeout(() => {
-          start();
+          start(stepName="Tutorial1");
         }, 5000); 
         navigation.setParams({ iniciarTutorial: false });
         
