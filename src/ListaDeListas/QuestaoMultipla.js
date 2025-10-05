@@ -15,7 +15,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 export default function QuestaoMultipla({ route, navigation }) {
     
-    const time = 30 - areas[route.params.area].tempoDecrescido + route.params.character.extraTime;
+    const time = 45 - areas[route.params.area].tempoDecrescido + route.params.character.extraTime;
 
     const [question, setQuestion] = useState(null);
     const [showInitialAnimation, setShowInitialAnimation] = useState(true);

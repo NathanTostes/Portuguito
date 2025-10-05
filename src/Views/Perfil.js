@@ -114,7 +114,7 @@ export default function Perfil() {
 
         <View style={Styles.containerFilho}>
           <View style={Styles.input}>
-            <Text style={Styles.txtInput}>Nome: {usuario ? usuario.nome : ""}</Text>
+            <Text style={Styles.txtInput}>Apelido: {usuario ? usuario.nome : ""}</Text>
           </View>
         </View>
         <View style={Styles.containerFilho}>

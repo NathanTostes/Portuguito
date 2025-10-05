@@ -14,7 +14,7 @@ export default {
     name: "Papaituguito",
     life: 14,
     damage: 2,
-    extraTime: 0,
+    extraTime: 2,
     description: "Pai da Portuguita",
     price: 200,
     imagemFront: require("../Imagens/adventure/papaituguitoFront.png"),
@@ -39,5 +39,15 @@ export default {
     price: 500,
     imagemFront: require("../Imagens/adventure/vilatuguitaFront.png"),
     imagemBack: require("../Imagens/adventure/vilatuguitaBack.png")
+  },
+  mamaetuguita: {
+    name: "Mamãetuguita",
+    life: 11,
+    damage: 3,
+    extraTime: 0,
+    description: "Mamãe da Portuguita",
+    price: 200,
+    imagemFront: require("../Imagens/adventure/mamaetuguitaFront.png"),
+    imagemBack: require("../Imagens/adventure/mamaetuguitaBack.png")
   }
 };

@@ -399,6 +399,62 @@ export default [
                 ]
             }
         ]
+    },
+    // Area 8
+    {
+        backgroundArea: require("../Imagens/adventure/area8background1.png"),
+        backgroundBattle: require("../Imagens/adventure/area8background2.png"),
+        icon: require("../Imagens/adventure/faseIcon8.png"),
+        iconPositions: [
+            { top: height*0.45, right: 70 },
+            { top: 50, right: -200 },
+            { top: height*-0.3, right: -10 }
+        ],
+        enemyPositions: [
+            { top: height>= 700?height*0.25:height*0.1, right: 45 },
+            { top: height>= 700?height*0.4:height*0.2, right: -70 },
+            { top: height>= 700?height*0.35:height*0.25, right: 170 },
+        ],
+        tempoDecrescido: 40,
+        fases: [
+            {
+                enemies: [
+                    {
+                        vida: 1,
+                        dano: 1,
+                        imagem: require('../Imagens/adventure/minion8.png')
+                    }
+                ]
+            },
+            {
+                enemies: [
+                    {
+                        vida: 25,
+                        dano: 20,
+                        imagem: require('../Imagens/adventure/minion8.png')
+                    },
+                    {
+                        vida: 25,
+                        dano: 20,
+                        imagem: require('../Imagens/adventure/minion8.png')
+                    },
+                    {
+                        vida: 25,
+                        dano: 20,
+                        imagem: require('../Imagens/adventure/minion8.png')
+                    }
+                ]
+            },
+            {
+                enemies: [
+                    {
+                        vida: 100,
+                        dano: 28,
+                        imagem: require('../Imagens/adventure/boss8.png')
+                    }
+                ]
+            }
+        ]
     }
 
 ]

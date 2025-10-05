@@ -272,7 +272,7 @@ export default function PerfilAluno() {
         <View style={Styles.containerFilho}>
           <View style={Styles.viewOptions}>
             <Text style={Styles.txtInput}>
-              Nome: {user ? user.nome : ""}
+              Apelido: {user ? user.nome : ""}
             </Text>
           </View>
         </View>
