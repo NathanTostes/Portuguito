@@ -1,165 +1,463 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import * as React from 'react';
-import { ScrollView } from 'react-native';
-import { List } from 'react-native-paper';
-import Styles from "../Styles.js/StyleAjuda";
+import { Image, ScrollView, Text, View } from 'react-native';
+import { List, Menu, Button, Divider } from 'react-native-paper';
+import { StylesRogueLike, Styles, StylesPerfil, StylesTrilha } from "../Styles.js/StyleAjuda";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function HelpScreen() {
     const [expanded, setExpanded] = React.useState('');
-    const [mainExpanded, setMainExpanded] = React.useState('');
+    const [selectedSection, setSelectedSection] = React.useState('Perfil');
+    const [menuVisible, setMenuVisible] = React.useState(false);
 
     const handlePress = (item) => {
         setExpanded(expanded === item ? '' : item);
-        setMainExpanded(expanded === item ? '' : item);
+    };
+
+    const openMenu = () => setMenuVisible(true);
+    const closeMenu = () => setMenuVisible(false);
+
+    const selectSection = (section) => {
+        setSelectedSection(section);
+        setExpanded('');
+        closeMenu();
+    };
+
+    const sections = [
+        { key: 'Perfil', title: 'Perfil', icon: require("../Imagens/icons/person.png") },
+        { key: 'Trilha', title: 'Trilha', icon: require("../Imagens/icons/board.png") },
+        { key: 'Desafio Semanal', title: 'Desafio Semanal', icon: require("../Imagens/icons/trophy.png") },
+        { key: 'Roguelike', title: 'Roguelike', icon: require("../Imagens/icons/compass.png") }
+    ];
+
+    const renderPerfilContent = () => (
+        <View style={Styles.content}>
+            <View style={Styles.sectionTitle}>
+                <Text style={Styles.guiaTitle}>Perfil</Text>
+                <Image
+                    source={require("../Imagens/icons/person.png")}
+                    style={Styles.imageTitle}
+                />
+            </View>
+            <Text style={Styles.topicos}>
+                O que você encontra?
+            </Text>
+            <Text style={StylesPerfil.paragrafo}>
+                Na aba perfil, você tem acesso a todas as informações do seu usuário, tais como:
+            </Text>
+            <View style={StylesPerfil.listaBox}>
+                <View style={StylesPerfil.listaItem}>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                        style={StylesPerfil.listaImg}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>Nome</Text>
+                </View>
+                <View style={StylesPerfil.listaItem}>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>A sequência de dias que você está usando o Portuguito</Text>
+                </View>
+                <View style={StylesPerfil.listaItem}>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>Desde quando você tem sua conta</Text>
+                </View>
+                <View style={StylesPerfil.listaItem}>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>E-mail da sua conta</Text>
+                </View>
+                <View style={StylesPerfil.listaItem}>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>Suas conquistas</Text>
+                </View>
+
+
+            </View>
+            <Text style={StylesPerfil.paragrafo}>
+                Os botões que estão presentes são:
+            </Text>
+            <View >
+                <View style={StylesPerfil.listaItem}>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>Botão de alterar sua foto de perfil</Text>
+                </View>
+                <View style={StylesPerfil.listaItem}>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>Botão para entrar nas configurações do aplicativo</Text>
+                </View>
+                <View style={StylesPerfil.listaItem}>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>Botão para sair da sua conta atual e ir para a tela de Login/Cadastro</Text>
+                </View>
+
+            </View>
+            <View style={Styles.bordaFinal}></View>
+        </View>
+    );
+
+    const renderTrilhaContent = () => (
+        <View style={Styles.content}>
+            <View style={Styles.sectionTitle}>
+                <Text style={Styles.guiaTitle}>Trilha</Text>
+                <Image
+                    source={require("../Imagens/icons/board.png")}
+                    style={Styles.imageTitle}
+                />
+            </View>
+            <Text style={Styles.topicos}>
+                O que você encontra?
+            </Text>
+            <Text style={StylesPerfil.paragrafo}>
+                Nessa aba, você tem acesso às trilhas para o aprendizado individualizado de cada tema da língua portuguesa. Na tela inicial, você tem acesso a 3 caminhos:
+            </Text>
+            <View style={StylesPerfil.listaBox}>
+                <View style={StylesPerfil.listaItem}>
+                    <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}>Morfologia </Text>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>
+                        A morfologia estuda a estrutura, a formação, a flexão e a classificação das palavras de uma língua.
+                    </Text>
+                </View>
+                <View style={StylesPerfil.listaItem}>
+                    <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}>Ortografia </Text>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>
+                        A ortografia estuda a forma correta de escrita das palavras de uma língua.
+                    </Text>
+                </View>
+                <View style={StylesPerfil.listaItem}>
+                    <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}>Sintaxe </Text>
+                    <Image
+                        source={require("../Imagens/icons/bola.png")}
+                    />
+                    <Text style={StylesPerfil.listaItemTexto}>
+                        A sintaxe é uma área da gramática que estuda a função e a relação entre as palavras e as orações.
+                    </Text>
+                </View>
+
+
+
+            </View>
+            <Text style={StylesTrilha.paragrafo}>
+                Em cada uma dessas, áreas você tem diversas tópicos que são separados por temas, exemplo:
+            </Text>
+            <Text style={StylesTrilha.paragrafo}>
+                Morfologia > Classes Gramaticais.
+            </Text>
+            <Text style={StylesTrilha.ultimoParagrafo}>
+                Dentro de cada tópico, seu objetivo vai ser passar pelos desafios até conseguir completar aquela determinada fase.
+            </Text>
+            <View style={Styles.bordaFinal}></View>
+        </View>
+    );
+
+    const renderDesafioSemanalContent = () => (
+        <View>
+            <View style={Styles.sectionTitle}>
+                <Text style={Styles.guiaTitle}>Desafio Semanal</Text>
+                <Image
+                    source={require("../Imagens/icons/trophy.png")}
+                    style={Styles.imageTitle}
+                />
+            </View>
+            <Text style={Styles.topicos}>
+                O que você encontra?
+            </Text>
+            <Text style={StylesTrilha.paragrafo}>
+                Aqui você tem acesso ao desafio semanal. Seu objetivo é participar todos os dias e concluir o máximo de desafios que conseguir durante a semana.
+            </Text>
+            <Text style={StylesTrilha.paragrafo}>
+                Conforme o jogador for completando as fases, somam-se os pontos para subir no ranking semanal.
+            </Text>
+            <Text style={StylesTrilha.ultimoParagrafo}>
+                O nível das questões são variáveis, portanto, prepare-se para enfrentar qualquer tipo de matéria que temos no nosso banco de questões
+            </Text>
+            <Text style={StylesTrilha.paragrafo}>
+                Classificando os barcos na tela:
+            </Text>
+            <View style={StylesPerfil.listaItem}>
+                <Image
+                    source={require("../Imagens/icons/bola.png")}
+                />
+                <Text style={StylesPerfil.listaItemTexto}>
+                    D <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}> >  </Text>
+                    Domingo
+                </Text>
+            </View>
+            <View style={StylesPerfil.listaItem}>
+                <Image
+                    source={require("../Imagens/icons/bola.png")}
+                />
+                <Text style={StylesPerfil.listaItemTexto}>
+                    2ª  <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}> >  </Text>
+                    Segunda-Feira
+
+                </Text>
+            </View>
+            <View style={StylesPerfil.listaItem}>
+                <Image
+                    source={require("../Imagens/icons/bola.png")}
+                />
+                <Text style={StylesPerfil.listaItemTexto}>
+                    3ª  <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}> >  </Text>
+                    Terça-Feira
+                </Text>
+            </View>
+            <View style={StylesPerfil.listaItem}>
+                <Image
+                    source={require("../Imagens/icons/bola.png")}
+                />
+                <Text style={StylesPerfil.listaItemTexto}>
+                    4ª  <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}> >  </Text>
+                    Quarta-Feira
+                </Text>
+            </View>
+            <View style={StylesPerfil.listaItem}>
+                <Image
+                    source={require("../Imagens/icons/bola.png")}
+                />
+                <Text style={StylesPerfil.listaItemTexto}>
+                    5ª <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}> >  </Text>
+                    Quinta-Feira
+                </Text>
+            </View>
+            <View style={StylesPerfil.listaItem}>
+                <Image
+                    source={require("../Imagens/icons/bola.png")}
+                />
+                <Text style={StylesPerfil.listaItemTexto}>
+                    6ª <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}> >  </Text>
+                    Sexta-Feira
+                </Text>
+            </View>
+            <View style={StylesPerfil.listaItem}>
+                <Image
+                    source={require("../Imagens/icons/bola.png")}
+                />
+                <Text style={StylesPerfil.listaItemTexto}>
+                    S <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}> >  </Text>
+                    Sábado
+                </Text>
+            </View>
+
+            <View style={Styles.desafioSemanal}>
+                <Text style={Styles.desafioSemanalTopicos}>Desafio Semanal</Text>
+                <Image
+                    source={require("../Imagens/icons/ship-wheel.png")}
+
+                />
+            </View>
+
+            <Text style={StylesTrilha.ultimoParagrafo}>
+                Se você clicar no timão - canto superior direito da tela - estará disponível para visualizar o ranking daquela semana, ou o ranking anterior.
+            </Text>
+            <View style={Styles.bordaFinal}></View>
+            <View style={Styles.bordaFinal}></View>
+        </View>
+    );
+
+    const renderRoguelikeContent = () => (
+        <View style={Styles.content}>
+            <View style={Styles.sectionTitle}>
+                <Text style={Styles.guiaTitle}>Roguelike</Text>
+                <Image
+                    source={require("../Imagens/icons/compass.png")}
+                    style={Styles.imageTitle}
+                />
+            </View>
+            <View style={StylesRogueLike.section}>
+                <Text style={StylesRogueLike.sectionTitle}>
+                    O que é?
+                </Text>
+                <Text style={StylesRogueLike.sectionDescription}>
+                    O Roguelike é uma das dinâmicas mais divertidas do nosso app, lá você avança por fases, enfrenta inimigos e corre contra o tempo.
+                </Text>
+            </View>
+            <View style={StylesRogueLike.section}>
+                <Text style={StylesRogueLike.sectionTitle}>
+                    Personagens
+                </Text>
+                <Text style={StylesRogueLike.sectionDescription}>
+                    Antes de começar sua trajetória de guerreiro, há, na tela inicial, alguns personagens para a sua escolha, porém é preciso desbloqueá-los:
+                </Text>
+            </View>
+            <View style={StylesRogueLike.gridCharacter}>
+                <View style={StylesRogueLike.gridItem}>
+                    <Text style={StylesRogueLike.gridItemTitle}>Portuguita (padrão)</Text>
+                    <Image
+                        source={require('../Imagens/adventure/portuguitaFront.png')}
+                        style={StylesRogueLike.character}
+                    />
+                </View>
+                <View>
+                    <Text style={StylesRogueLike.gridItemTitle} >Papatuguito</Text>
+                    <Image
+                        source={require('../Imagens/adventure/papaituguitoFront.png')}
+                        style={StylesRogueLike.character}
+                    />
+                </View>
+                <View>
+                    <Text style={StylesRogueLike.gridItemTitle}>Porturei</Text>
+                    <Image
+                        source={require('../Imagens/adventure/portureiFront.png')}
+                        style={StylesRogueLike.character}
+                    />
+                </View>
+                <View>
+                    <Text style={StylesRogueLike.gridItemTitle}>Vilãtuguita</Text>
+                    <Image
+                        source={require('../Imagens/adventure/vilatuguitaFront.png')}
+                        style={StylesRogueLike.character}
+                    />
+                </View>
+            </View>
+            <View style={StylesRogueLike.section}>
+                <View style={StylesRogueLike.titleIcon}>
+                    <Text style={StylesRogueLike.sectionTitle}>
+                        Mercado Da Aventura
+                    </Text>
+                    <MaterialCommunityIcons
+                        name="store"
+                        size={60}
+                        color="#F5505A"
+                    />
+                </View>
+                <Text style={StylesRogueLike.sectionDescription}>
+                    Para desbloquear qualquer personagem, você deve juntar moedas e comprar no
+                    “Mercado da Aventura”.
+                </Text>
+            </View>
+            <View style={StylesRogueLike.section}>
+                <View style={StylesRogueLike.titleIcon}>
+                    <Text style={StylesRogueLike.sectionTitle}>
+                        Ranking da Aventura
+                    </Text>
+                    <MaterialCommunityIcons
+                        name="chart-bar"
+                        size={50}
+                        color="#F5505A"
+                    />
+                </View>
+                <Text style={StylesRogueLike.sectionDescription}>
+                    Caso queira ver o Ranking da Aventura, deve clicar no botão do canto superior direito.
+                </Text>
+            </View>
+            <View style={StylesRogueLike.section}>
+                <View style={StylesRogueLike.titleIcon}>
+                    <Text style={StylesRogueLike.sectionTitle}>
+                        Como Jogar?
+                    </Text>
+                </View>
+                <Text style={StylesRogueLike.sectionDescription}>
+                    Ao iniciar sua aventura, você deve escolher algum item para continuar. Saindo dessa tela, ficará disponível o acesso a cada fase.
+                </Text>
+                <View style={Styles.centralizar}>
+                    <Image
+                        source={require("../Imagens/background-aventura.png")}
+                    />
+                </View>
+
+                <Text style={StylesRogueLike.sectionDescription}>
+                    Entretanto, antes de começar, é importante se atentar ao quanto de vida, de dano e de tempo extra
+                    você tem para passar de cada obstáculo.
+                </Text>
+
+                <View style={Styles.centralizar}>
+                    <Image
+                        source={require("../Imagens/atributos-aventura.png")}
+                    />
+
+                    <Text style={StylesRogueLike.sectionDescription}>
+                        Quanto mais, melhor!
+                    </Text>
+                </View>
+
+                <Text style={StylesRogueLike.sectionDescription}>
+                    Ao entrar em alguma área de batalha, você escolhe o inimigo que queira enfrentar e, se conseguir derrotá-lo, avança de fase.
+                </Text>
+                <Text style={StylesRogueLike.sectionDescription}>
+                    <Text style={{ color: "#F5505A", fontWeight: "bold", fontSize: 17 }}>Lembre-se:</Text> toda vez que você abandonar a aventura, deverá reiniciar todo o processo!
+                </Text>
+            </View>
+            <View style={Styles.bordaFinal}></View>
+        </View>
+    );
+
+    const renderContent = () => {
+        switch (selectedSection) {
+            case 'Perfil':
+                return renderPerfilContent();
+            case 'Trilha':
+                return renderTrilhaContent();
+            case 'Desafio Semanal':
+                return renderDesafioSemanalContent();
+            case 'Roguelike':
+                return renderRoguelikeContent();
+            default:
+                return renderPerfilContent();
+        }
     };
 
     return (
         <LinearGradient colors={["#D5D4FB", "#9B98FC"]} style={[Styles.container]}>
-            <ScrollView style={{ padding: 10 }}>
-                <List.Section>
-                    <List.Subheader style={{ fontSize: 18, fontWeight: 'bold' }}>
-                        Ajuda do Aplicativo
-                    </List.Subheader>
-                    <List.Accordion title="Perfil"
-                        left={(props) => <List.Icon {...props} icon="sword-cross" />}
-                        mainExpanded={expanded === 'Perfil'}
-                        onPress={() => handlePress('Perfil')}
-                    >
-                        <List.Accordion
-                        title="Interface do perfil"
-                        left={(props) => <List.Icon {...props} icon="help-circle" />}
-                        expanded={expanded === 'interface'}
-                        onPress={() => handlePress('interface')}
-                        >
-                            <List.Item
-                            titleNumberOfLines={null} descriptionNumberOfLines={null}  description="- Na aba perfil, você tem acesso a informações de usuário, tais como:
-- Nome
-- A sequência de dias que você está usando o Portuguito
-- Desde quando você tem sua conta
-- E-mail da sua conta
-- Suas conquistas"
-                            />
-                        </List.Accordion>
-                        <List.Accordion
-                        title="Botões do perfil"
-                        left={(props) => <List.Icon {...props} icon="help-circle" />}
-                        expanded={expanded === 'Botoes'}
-                        onPress={() => handlePress('Botoes')}
-                        >
-                            <List.Item
-                            titleNumberOfLines={null} descriptionNumberOfLines={null}  description="Os botões que estão presentes são:
-- &lt;imagem do botão de foto de perfil&gt; Nesse botão, você consegue alterar sua foto
-de perfil.
-- &lt;imagem do botão de configuração&gt; Você tem acesso ao app aqui.
-- &lt;imagem do botão de sair&gt; Aqui, você consegue sair da sua conta e voltar para a
-tela de login do aplicativo."
-                            />
-                        </List.Accordion>
-                    </List.Accordion>
-                    <List.Accordion title="Trilha"
-                        left={(props) => <List.Icon {...props} icon="sword-cross" />}
-                        mainExpanded={expanded === 'Trilha'}
-                        onPress={() => handlePress('Trilha')}
-                    >
-                        <List.Item
-                            titleNumberOfLines={null} descriptionNumberOfLines={null}  description="- Nessa aba, você tem acesso às trilhas para o aprendizado individualizado de
-cada tema da Língua Portuguesa.
-- Na tela inicial da Trilha, você tem acesso a 3 caminhos:
-Morfologia: &quot;A morfologia estuda a estrutura, a formação, a flexão e a
-classificação das palavras de uma língua”.
-Ortografia: “A ortografia estuda a forma correta de escrita das palavras de uma
-língua”.
-Sintaxe: “A sintaxe é uma área da gramática que estuda a função e a relação entre
-as palavras e as orações”.
-&lt;imagem da tela com os caminhos&gt;
+            <View style={Styles.header}>
+                <List.Subheader style={Styles.titleHelpPage}>
+                    Ajuda
+                </List.Subheader>
 
-- Em cada uma dessas áreas, você tem diversos conteúdos que são separados
-por temas, exemplo:
-Morfologia &gt; Classes Gramaticais.
-Dentro de cada tema, seu objetivo vai ser passar pelos desafios até conseguir completar
-aquela fase."
-                            />
-                    </List.Accordion>
-                    <List.Accordion title="Desafio Semanal"
-                        left={(props) => <List.Icon {...props} icon="sword-cross" />}
-                        mainExpanded={expanded === 'Desafio Semanal'}
-                        onPress={() => handlePress('Desafio Semanal')}
-                    >
-                        <List.Item
-                            titleNumberOfLines={null} descriptionNumberOfLines={null}  description="- Aqui, você tem acesso ao desafio semanal. O objetivo é participar todos os dias e
-concluir o máximo de desafios que conseguir durante a semana.
-- Conforme o jogador for completando as fases, somam-se pontos para subir no
-ranking semanal.
-- O nível das questões é variável, portanto, prepare-se para enfrentar conteúdos
-diversos do nosso banco de itens.
-- Classificando os barcos na tela:
-- D &gt; Domingo
-- 2ª &gt; Segunda-feira
-- 3ª &gt; Terça-feira
-- 4ª &gt; Quarta-feira
-- 5ª &gt; Quinta-feira
-- 6ª &gt; Sexta-feira
-- S &gt; Sábado
-- Se você clicar no timão (um tipo de leme, volante) - canto superior direito da tela,
-conseguirá visualizar o ranking daquela semana ou o ranking anterior. &lt;imagem
-do botão&gt;"
-                            />
-                    </List.Accordion>
-                    <List.Accordion title="Roguelike"
-                        left={(props) => <List.Icon {...props} icon="sword-cross" />}
-                        mainExpanded={expanded === 'roguelike'}
-                        onPress={() => handlePress('roguelike')}>
-                    <List.Accordion
-                        title="Como funciona o Roguelike?"
-                        left={(props) => <List.Icon {...props} icon="help-circle" />}
-                        expanded={expanded === 'sobre'}
-                        onPress={() => handlePress('sobre')}
-                    >
-                        <List.Item
-                            title="O Roguelike é uma das dinâmicas mais divertidas do app, onde você avança por fases, enfrenta inimigos e corre contra o tempo."
+                <Menu
+                    style={{
+                        width: 300
+                    }}
+                    visible={menuVisible}
+                    onDismiss={closeMenu}
+
+                    anchor={
+                        <Button
+                            mode="contained"
+                            onPress={openMenu}
+                            compact
+                            style={Styles.buttonPerfil}
+                        >
+                            {selectedSection} ▼
+                        </Button>
+                    } j
+
+                >
+                    {sections.map((section) => (
+                        <Menu.Item
+                            key={section.key}
+                            onPress={() => selectSection(section.key)}
+                            title={section.title}
+                            leadingIcon={section.icon}
                         />
-                    </List.Accordion>
+                    ))}
+                </Menu>
+            </View>
 
-                    <List.Accordion
-                        title="Personagens"
-                        left={(props) => <List.Icon {...props} icon="account-group" />}
-                        expanded={expanded === 'personagens'}
-                        onPress={() => handlePress('personagens')}
-                    >
-                        <List.Item titleNumberOfLines={null} descriptionNumberOfLines={null} description="Antes de começar sua trajetória de guerreiro, há, na tela inicial, alguns personagens
-para a sua escolha, porém é preciso desbloqueá-los:
-- Portuguita (Padrão)
-- Papaituguito
-- Porturei
-- Vilãtuguita
+            <Divider />
 
-- Para desbloquear qualquer personagem, você deve juntar moedas e comprar no
-“Mercado da Aventura” - Canto superior esquerdo. &lt;Imagem do botão&gt;
-- Caso queira ver o ranking da Aventura, deve clicar no botão do canto superior direito
-&lt;imagem do botão&gt;"/>
-                    </List.Accordion>
-
-                    
-
-                    <List.Accordion
-                        title="Dicas de Jogo"
-                        left={(props) => <List.Icon {...props} icon="lightbulb-on" />}
-                        expanded={expanded === 'dicas'}
-                        onPress={() => handlePress('dicas')}
-                    >
-                        <List.Item descriptionNumberOfLines={null} titleNumberOfLines={null} title="⚔️ Lute contra inimigos, 🕒 corra contra o tempo e 💎 junte recursos para evoluir." description= '- O Roguelike, basicamente, funciona da seguinte forma:
-- Ao iniciar sua aventura &lt;imagem do botão&gt;, você deve escolher algum item para
-continuar. Saindo dessa tela, ficará disponível o acesso a cada fase &lt;imagem da tela&gt;,
-mas, antes de começar, é importante se atentar ao quanto de vida, de dano e de tempo
-extra &lt;imagem do trecho de botões&gt; você tem para passar de cada obstáculo. Quanto
-mais, melhor!
-- Ao entrar em alguma área de batalha, você escolhe o inimigo que queira enfrentar e, se
-conseguir derrotá-lo, avança de fase.
-- Lembre-se: toda vez que você abandonar a aventura, todo o progresso será perdido!
-&lt;imagem da pop up&gt;' />
-                    </List.Accordion>
-                    
-                    </List.Accordion>
+            {/* Conteúdo da seção selecionada */}
+            <ScrollView style={{ padding: 10, width: '100%' }}>
+                <List.Section style={{ width: '100%' }}>
+                    {renderContent()}
                 </List.Section>
             </ScrollView>
         </LinearGradient>

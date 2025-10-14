@@ -1,106 +1,194 @@
 import { StyleSheet, Dimensions } from "react-native";
-const {width, height} = Dimensions.get("window")
+const { width, height } = Dimensions.get("window")
 
-export default StyleSheet.create({
+export const Styles = StyleSheet.create({
     gradient: {
         ...StyleSheet.absoluteFillObject,
     },
     container: {
         flex: 1,
         backgroundColor: "#D2D0FA",
-        alignItems:'center',
-        minHeight: height<700 ? height+200:null,
+        alignItems: 'center',
+        minHeight: height < 700 ? height + 200 : null,
         paddingTop: '10%',
+
     },
-    button: {
-        position:  'absolute',
-        bottom: 0,
-        backgroundColor: "#FF6F6F",
-        paddingVertical: 15,
-        paddingHorizontal: 45,
-        borderRadius: 10,
-        marginBottom: 30,
+
+    header: {
+        width: "100%",
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 15,
+        paddingTop: 10
+    },
+    titleHelpPage: {
+        color: "black",
+        borderBottomWidth: 1,
+        borderBottomColor: "#F5505A",
+        fontSize: 22,
+        fontWeight: 'bold',
+        margin: 0,
+        padding: "5px",
+
+    },
+    buttonPerfil: {
+        backgroundColor: "#F5505A",
+        width: 150
+    },
+    content: {
+        margin: 10
+    },
+    sectionTitle: {
+        width: "100%",
+        justifyContent: "space-between",
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 40
+    },
+    guiaTitle: { 
+        fontSize: 32,
+        color: "#F5505A"
+    },
+    topicos:  { 
+        fontSize: 24,
+        borderBottomWidth: 1,
+        borderBottomColor: "#F5505A",
+        color: "#F5505A",
+        alignSelf: "flex-start",
+        marginBottom: 20
+    },
+    desafioSemanal:  {
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: 'space-between',
+    },
+    desafioSemanalTopicos:  { 
+        fontSize: 24,
+        borderBottomWidth: 1,
+        borderBottomColor: "#F5505A",
+        color: "#F5505A",
         
     },
-    buttonText: {
-        color: "#FFFFFF",
-        fontSize: 18,
-        fontWeight: "bold",
+    bordaFinal: { 
+        marginVertical: 5
     },
-    profilesContainer: {
+    centralizar:  {
+        width: "100%",
+        alignItems: "center",
+    }
+
+})
+
+export const StylesRogueLike = StyleSheet.create({
+
+    section: {
+        width: "100%",
+        display: "flex",
+        alignItems: "start",
+        justifyContent: "center",
+        gap: 15,
+        marginBottom: 20
+
+    },
+    sectionTitle: {
+        fontSize: 24,
+        color: "#F5505A",
+        borderBottomWidth: 1,
+        borderBottomColor: "#F5505A",
+        paddingBottom: 6,
+        alignSelf: 'flex-start'
+    },
+    sectionDescription: {
+        color: "white",
+        fontSize: 16
+    },
+    gridCharacter: {
         flexDirection: 'row',
-        width: '90%',
-    },
-    profileContainer: {
-        width: width * 0.45,
-        transform: width<360?[{scale: 0.9}]: [{scale:1}],
-        marginTop: 10,
-        alignItems: 'center',
-    },
-    backgroundUser: {
-        width: 140,
-        height: 140,
-        borderRadius: 70,
-        marginBottom: 10,
-        borderColor: '#ff8c90',
-        borderWidth: 4,
-        overflow: 'hidden',
-        backgroundColor: '#00000000',
-    },
-    selectedProfile: {
-        borderColor: "#2cc21b",
-    },
-    image: {
-        width: null,
-        height: 'auto',
-        flex: 1,
-        resizeMode: "cover"
-    },
-    selectIconFrame: {
-        zIndex: 1,
-        position: 'absolute',
-        bottom: 36,
-        right: 20,
-        height: 30,
-        width: 30,
-        borderRadius: 15,
-        backgroundColor: "#2cc21b",
-    },
-    selectIcon: {
-        color: "#FFFFFF",
-        fontSize: 20,
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
         padding: 5,
+        gap: 20,
+        marginBottom: 30
     },
-    overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: "rgba(0, 0, 0, 0.35)",
-        borderRadius: 75,
+    gridItem: {
+        width: '48%',
+        aspectRatio: 1
     },
-    profileText: {
-        color: "#FFFFFF",
-        fontSize: 20,
-        width:width < 360? width*0.315 : null, 
+    gridItemTitle: {
+        color: "#F5505A",
+        borderBottomWidth: 1,
+        borderBottomColor: "#F5505A",
+        paddingBottom: 6,
+        alignSelf: 'flex-start',
+        fontSize: 15,
         fontWeight: "bold",
+        marginBottom: 20
     },
-    textContainer: {
-        flexDirection: 'row',
+    character: {
+        width: 120,
+        height: 120
     },
-    infoButton: {
-        top: 3,
-        marginLeft: width<360? 0:4,
-        height: 22,
-        width: 22,
-        borderRadius: 11,
-        backgroundColor: "#1176fa",
+    titleIcon: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "end",
+        height: 50
+    }
+})
+
+
+export const StylesPerfil = StyleSheet.create({ 
+    paragrafo:  { 
+        fontSize: 17,
+        color: "white",
+        marginVertical: 15,
+        paddingBottom: 5,
+        borderBottomColor: "#F5505A",
+        borderBottomWidth: 1,
+        alignSelf: "flex-start"
     },
-    infoIcon: {
-        color: "#FFFFFF",
-        fontSize: 18,
-        padding: 2.5,
+    listaBox: {
+        
     },
-    loader: {
-        ...StyleSheet.absoluteFillObject,
-        justifyContent: 'center',
-        alignItems: 'center',
+    listaItem: {
+        flexDirection: "row",
+        alignItems: "baseline",
+        gap: 5
     },
+    listaImg: { 
+        
+    },
+    listaItemTexto:  {
+        marginVertical: 10, 
+        paddingHorizontal: 5,
+        color: "white",
+        fontSize: 17,
+        flexShrink: 1,
+
+    },
+    bola: { 
+        color: "#F5505A",
+        
+    }
+})
+
+export const StylesTrilha = StyleSheet.create({ 
+    paragrafo: { 
+        fontSize: 17,
+        color: "white",
+        marginVertical: 15,
+        paddingBottom: 5,
+    },
+    ultimoParagrafo: { 
+        fontSize: 17,
+        color: "white",
+        marginVertical: 15,
+        paddingBottom: 5,
+        borderBottomColor: "#F5505A",
+        borderBottomWidth: 1,
+        alignSelf: "flex-start"
+    }
+
 })
