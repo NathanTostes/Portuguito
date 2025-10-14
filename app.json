@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "Portuguito",
-    "slug": "Portuguito",
-    "version": "5.0.3",
+    "slug": "portuguito",
+    "version": "5.1.4",
     "orientation": "portrait",
     "icon": "./assets/portuguitaBase.png",
     "userInterfaceStyle": "light",
@@ -25,7 +25,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.Portuguito",
-      "versionCode": 23
+      "versionCode": 25
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -44,7 +44,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "f77b7b16-b39c-4f91-9aaf-904fc7400136"
+        "projectId": "6e6393aa-0522-47d0-8948-86eb8ac7b851"
       }
     }
   }

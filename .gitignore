@@ -11,7 +11,7 @@ credentials.json
 *.p12
 *.key
 *.mobileprovision
-*.orig.*
+.orig.
 web-build/
 
 # macOS
