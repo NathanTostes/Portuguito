@@ -1,13 +1,54 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, ImageBackground, TouchableOpacity } from 'react-native'
 import Styles from '../Styles.js/StylesSubMenu1'
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute,useFocusEffect } from "@react-navigation/native";
+import { TourGuideZone, TourGuideZoneByPosition, useTourGuideController } from 'rn-tourguide'
 
 export default function SubMenu1() {
   const navigation = useNavigation()
-  
+  const route = useRoute()
+  const tutorialFase2Iniciado = route.params?.tutorialConcluidofase2;
+  const { start, tourKey, canStart, eventEmitter, stop } = useTourGuideController();
 
+  const handleOnStop = useCallback(() => {
+    stop();
+    eventEmitter.off('stop', handleOnStop);
+    console.log('Tour finalizado. Navegando para próxima fase.3');
+    setTimeout(() => {
+      navigation.navigate('Trilha', { params: 'crase' }, {condicao:{tutorialConcluido:true}});
+      console.log("Comando de navegação enviado com sucesso.");
+    }, 0); 
+  }, [navigation, handleOnStop]);
+
+
+  useFocusEffect(
+        useCallback(() => {
+            let timer;
+            
+            if (tutorialFase2Iniciado && canStart) {
+                timer = setTimeout(() => {
+                    console.log("Iniciando tour no passo 13 após foco.");
+                    start(13);
+                    navigation.setParams({ tutorialConcluidofase2: undefined });
+                }, 500);
+            }
+
+            return () => {
+                clearTimeout(timer);
+            };
+            
+        }, [tutorialFase2Iniciado, canStart, start, navigation]) 
+    );
+    
+
+    useEffect(() => {
+        eventEmitter.on('stop', handleOnStop);
+        
+        return () => {
+            
+        };
+    }, [eventEmitter, handleOnStop])
 
   return (
 
@@ -15,26 +56,27 @@ export default function SubMenu1() {
       <StatusBar style="auto" />
 
       <View style={Styles.divTela}>
+        <TourGuideZone zone={13}>
+          <View>
+
+            <TouchableOpacity onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'crase' })}>
+
+              <ImageBackground source={require('../Imagens/Placa5.png')} style={Styles.buttom}>
+
+                <Text style={Styles.textButtom}>
+                  Crase
+                </Text>
+
+              </ImageBackground>
+
+            </TouchableOpacity>
+
+          </View>
+        </TourGuideZone>
 
         <View>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'crase'})}>
-
-            <ImageBackground source={require('../Imagens/Placa5.png')} style={Styles.buttom}>
-
-              <Text style={Styles.textButtom}>
-                Crase
-              </Text>
-
-            </ImageBackground>
-
-          </TouchableOpacity>
-
-        </View>
-
-        <View>
-
-          <TouchableOpacity  onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'pontuacao'})}>
+          <TouchableOpacity onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'pontuacao' })}>
 
             <ImageBackground source={require('../Imagens/Placa5.png')} style={Styles.buttom}>
 
@@ -54,7 +96,7 @@ export default function SubMenu1() {
 
         <View>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'regencia'})}>
+          <TouchableOpacity onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'regencia' })}>
 
             <ImageBackground source={require('../Imagens/Placa5.png')} style={Styles.buttom}>
 
@@ -70,7 +112,7 @@ export default function SubMenu1() {
 
         <View>
 
-          <TouchableOpacity  onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'figurasDeLinguagem'})}>
+          <TouchableOpacity onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'figurasDeLinguagem' })}>
 
             <ImageBackground source={require('../Imagens/Placa5.png')} style={Styles.buttom}>
 
@@ -90,7 +132,7 @@ export default function SubMenu1() {
 
         <View>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'concordancia'})}>
+          <TouchableOpacity onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'concordancia' })}>
 
             <ImageBackground source={require('../Imagens/Placa5.png')} style={Styles.buttom}>
 
@@ -106,7 +148,7 @@ export default function SubMenu1() {
 
         <View>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'vozesVerbais'})}>
+          <TouchableOpacity onPress={() => navigation.navigate('Trilha', { screen: 'Trilha', params: 'vozesVerbais' })}>
 
             <ImageBackground source={require('../Imagens/Placa5.png')} style={Styles.buttom}>
 

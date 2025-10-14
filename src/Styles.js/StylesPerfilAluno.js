@@ -286,5 +286,15 @@ export default StyleSheet.create({
         position: 'absolute',
         left: width*0.95,
         top: 10,
+    },
+    buttonRate2: {
+        backgroundColor: '#ff8c90',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginTop: 20,
+        position: 'absolute',
+        left: width*0.95,
+        top: 60,
     }
 })

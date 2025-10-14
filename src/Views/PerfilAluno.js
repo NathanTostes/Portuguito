@@ -14,6 +14,8 @@ import { doc, getDocs, collection, query } from "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 import { Ionicons } from "react-native-vector-icons";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { TourGuideZone, TourGuideZoneByPosition, useTourGuideController } from 'rn-tourguide'
+
 
 export default function PerfilAluno() {
   const db = getFirestore(FIREBASE_APP);
@@ -27,6 +29,7 @@ export default function PerfilAluno() {
   const [modalIconColor, setModalIconColor] = useState(null);
   const [modalDescription, setModalDescription] = useState(null);
   const [profileImage, setProfileImage] = useState(undefined);
+  const { canStart, start, stop, eventEmitter } = useTourGuideController()
 
   const navigation = useNavigation();
 
@@ -72,6 +75,16 @@ export default function PerfilAluno() {
 
     return () => unsubscribe();
   };
+  const handleOnStop = () => {
+    console.log('Tour finalizado ou parado. Iniciando navegação...');
+    navigation.navigate('MenuTrilhas', { tutorialConcluido: true });
+  }
+  useEffect(() => {
+    eventEmitter.on('stop', handleOnStop);
+    return () => {
+      eventEmitter.off('stop', handleOnStop);
+    };
+  }, [navigation]);
 
   useFocusEffect(
 
@@ -227,172 +240,201 @@ export default function PerfilAluno() {
           >
             <Ionicons name="add-outline" style={Styles.editIcon} />
           </TouchableOpacity>
-          <View style={Styles.backgroundUser}>
-            {
-              profileImage === undefined ? (
-                <View style={Styles.loadingProfile}>
-                  <ActivityIndicator size="large" color="#ffffff"></ActivityIndicator>
-                </View>
-              ) : (
-                <Image
-                  style={Styles.image}
-                  source={profileImage}
-                />
-              )
-            }
-          </View>
+          <TourGuideZone zone={1}>
+            <View style={Styles.backgroundUser}>
+              {
+                profileImage === undefined ? (
+                  <View style={Styles.loadingProfile}>
+                    <ActivityIndicator size="large" color="#ffffff"></ActivityIndicator>
+                  </View>
+                ) : (
+                  <Image
+                    style={Styles.image}
+                    source={profileImage}
+                  />
+                )
+              }
+            </View>
+          </TourGuideZone>
         </View>
 
+
         <View style={Styles.buttonRate}>
+          <TourGuideZone zone={9}>
+            <TouchableOpacity
+              style={Styles.editIconFrame}
+              onPress={() => navigation.navigate("Rate")}
+            >
+              <AntDesign name="notification" style={Styles.editIcon} />
+            </TouchableOpacity>
+          </TourGuideZone>
+        </View>
+
+        <View style={Styles.buttonRate2}>
           <TouchableOpacity
             style={Styles.editIconFrame}
-            onPress={() => navigation.navigate("Rate")}
+            onPress={() => start()}
           >
             <AntDesign name="notification" style={Styles.editIcon} />
           </TouchableOpacity>
         </View>
 
         <View style={Styles.containerBotoes}>
-          <TouchableOpacity
-            style={[Styles.botao, Styles.sombra]}
-            onPress={() => logout()}
-          >
-            <Text style={Styles.txtBotao}>Sair</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[Styles.botao, Styles.sombra]}
-            onPress={() => navigation.navigate("Configuracao")}
-          >
-            <Text style={Styles.txtBotao}>Configuração</Text>
-          </TouchableOpacity>
+          <TourGuideZone zone={2}>
+            <TouchableOpacity
+              style={[Styles.botao, Styles.sombra]}
+              onPress={() => logout()}
+            >
+              <Text style={Styles.txtBotao}>Sair</Text>
+            </TouchableOpacity>
+          </TourGuideZone>
+          <TourGuideZone zone={3}>
+            <TouchableOpacity
+              style={[Styles.botao, Styles.sombra]}
+              onPress={() => navigation.navigate("Configuracao")}
+            >
+              <Text style={Styles.txtBotao}>Configuração</Text>
+            </TouchableOpacity>
+          </TourGuideZone>
         </View>
 
-
-
-        <View style={Styles.containerFilho}>
-          <View style={Styles.viewOptions}>
-            <Text style={Styles.txtInput}>
-              Apelido: {user ? user.nome : ""}
-            </Text>
+        <TourGuideZone zone={4}>
+          <View style={Styles.containerFilho}>
+            <View style={Styles.viewOptions}>
+              <Text style={Styles.txtInput}>
+                Apelido: {user ? user.nome : ""}
+              </Text>
+            </View>
           </View>
-        </View>
+        </TourGuideZone>
+
 
         <View style={Styles.containerFilho}>
           <View style={Styles.containerSonAux}>
             <View style={Styles.containerSonAuxFlexbox}>
-              <View style={Styles.ViewDados}>
-                <View style={Styles.titleView}>
-                  <Text style={Styles.txtTitleView}>Sequência</Text>
-                </View>
+              <TourGuideZone zone={5}>
+                <View style={Styles.ViewDados}>
+                  <View style={Styles.titleView}>
+                    <Text style={Styles.txtTitleView}>Sequência</Text>
+                  </View>
 
-                <View style={Styles.numberDays}>
-                  <Text style={Styles.txtnumberDays}>{sequenciaDias}</Text>
-                </View>
+                  <View style={Styles.numberDays}>
+                    <Text style={Styles.txtnumberDays}>{sequenciaDias}</Text>
+                  </View>
 
-                <View style={Styles.titleView}>
-                  <Text style={Styles.txtTitleView}>Dia(s)</Text>
-                </View>
-              </View>
 
-              <View style={Styles.ViewDados}>
-                <View style={Styles.titleView}>
-                  <Text style={Styles.txtTitleView}>Desde</Text>
+                  <View style={Styles.titleView}>
+                    <Text style={Styles.txtTitleView}>Dia(s)</Text>
+                  </View>
                 </View>
+              </TourGuideZone>
 
-                <View style={Styles.numberDays}>
-                  <Text style={Styles.txtDate}>
-                    {user
-                      ? format(user.dataCadastro.toDate(), "dd/MM/yy")
-                      : ""}
-                  </Text>
+              <TourGuideZone zone={6}>
+                <View style={Styles.ViewDados}>
+                  <View style={Styles.titleView}>
+                    <Text style={Styles.txtTitleView}>Desde</Text>
+                  </View>
+
+                  <View style={Styles.numberDays}>
+                    <Text style={Styles.txtDate}>
+                      {user
+                        ? format(user.dataCadastro.toDate(), "dd/MM/yy")
+                        : ""}
+                    </Text>
+                  </View>
                 </View>
-              </View>
+              </TourGuideZone>
             </View>
           </View>
         </View>
 
-        <View style={Styles.containerFilho}>
-          <View style={[Styles.viewOptions, Styles.campoEmail]}>
-            <Text style={Styles.txtInput}>
-              E-mail: {user ? user.email : ""}
-            </Text>
-          </View>
-        </View>
 
-        <Text style={Styles.txtAchievements}>Conquistas</Text>
-
-        {
-          (icons === null) ? (
-            <View style={Styles.containerFilho}>
-              <View style={Styles.playerIcons}>
-                <ActivityIndicator size="large" color="#EFEFFE"></ActivityIndicator>
-              </View>
+        <TourGuideZone zone={7}>
+          <View style={Styles.containerFilho}>
+            <View style={[Styles.viewOptions, Styles.campoEmail]}>
+              <Text style={Styles.txtInput}>
+                E-mail: {user ? user.email : ""}
+              </Text>
             </View>
-          ) : (
-            (Object.keys(icons).length === 0) ? (
+          </View>
+        </TourGuideZone>
+
+        <TourGuideZone zone={8}>
+          <Text style={Styles.txtAchievements}>Conquistas</Text>
+
+          {
+            (icons === null) ? (
               <View style={Styles.containerFilho}>
                 <View style={Styles.playerIcons}>
-                  <Text style={Styles.txtNoIcon}>
-                    Você ainda não possui nenhuma conquista
-                  </Text>
+                  <ActivityIndicator size="large" color="#EFEFFE"></ActivityIndicator>
                 </View>
               </View>
             ) : (
-              <View style={Styles.containerFilho}>
-                <View style={Styles.playerIcons}>
-                  {icons?.primeiroDesafio &&
-                    <TouchableOpacity
-                      onPress={() => {
-                        openIconModal();
-                        setModalIconColor("#FFD700");
-                        setModalDescription('1° lugar no desafio semanal');
-                      }
-                      }>
-                      <View style={Styles.iconContainer}>
-                        <Ionicons name="trophy" size={55} color="#FFD700" />
-                        <View style={Styles.iconQuantity}>
-                          <Text style={Styles.txtNoIcon}>{icons.primeiroDesafio}</Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  }
-                  {icons?.segundoDesafio &&
-                    <TouchableOpacity
-                      onPress={() => {
-                        openIconModal();
-                        setModalIconColor("#E9E9E9");
-                        setModalDescription('2° lugar no desafio semanal');
-                      }
-                      }>
-                      <View style={Styles.iconContainer}>
-                        <Ionicons name="trophy" size={55} color="#E9E9E9" />
-                        <View style={Styles.iconQuantity}>
-                          <Text style={Styles.txtNoIcon}>{icons.segundoDesafio}</Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  }
-                  {icons?.terceiroDesafio &&
-                    <TouchableOpacity
-                      onPress={() => {
-                        openIconModal();
-                        setModalIconColor("#CD853F");
-                        setModalDescription('3° lugar no desafio semanal');
-                      }
-                      }>
-                      <View style={Styles.iconContainer}>
-                        <Ionicons name="trophy" size={55} color="#CD853F" />
-                        <View style={Styles.iconQuantity}>
-                          <Text style={Styles.txtNoIcon}>{icons.terceiroDesafio}</Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  }
+              (Object.keys(icons).length === 0) ? (
+                <View style={Styles.containerFilho}>
+                  <View style={Styles.playerIcons}>
+                    <Text style={Styles.txtNoIcon}>
+                      Você ainda não possui nenhuma conquista
+                    </Text>
+                  </View>
                 </View>
-              </View>
+              ) : (
+                <View style={Styles.containerFilho}>
+                  <View style={Styles.playerIcons}>
+                    {icons?.primeiroDesafio &&
+                      <TouchableOpacity
+                        onPress={() => {
+                          openIconModal();
+                          setModalIconColor("#FFD700");
+                          setModalDescription('1° lugar no desafio semanal');
+                        }
+                        }>
+                        <View style={Styles.iconContainer}>
+                          <Ionicons name="trophy" size={55} color="#FFD700" />
+                          <View style={Styles.iconQuantity}>
+                            <Text style={Styles.txtNoIcon}>{icons.primeiroDesafio}</Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    }
+                    {icons?.segundoDesafio &&
+                      <TouchableOpacity
+                        onPress={() => {
+                          openIconModal();
+                          setModalIconColor("#E9E9E9");
+                          setModalDescription('2° lugar no desafio semanal');
+                        }
+                        }>
+                        <View style={Styles.iconContainer}>
+                          <Ionicons name="trophy" size={55} color="#E9E9E9" />
+                          <View style={Styles.iconQuantity}>
+                            <Text style={Styles.txtNoIcon}>{icons.segundoDesafio}</Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    }
+                    {icons?.terceiroDesafio &&
+                      <TouchableOpacity
+                        onPress={() => {
+                          openIconModal();
+                          setModalIconColor("#CD853F");
+                          setModalDescription('3° lugar no desafio semanal');
+                        }
+                        }>
+                        <View style={Styles.iconContainer}>
+                          <Ionicons name="trophy" size={55} color="#CD853F" />
+                          <View style={Styles.iconQuantity}>
+                            <Text style={Styles.txtNoIcon}>{icons.terceiroDesafio}</Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    }
+                  </View>
+                </View>
+              )
             )
-          )
-        }
+          }
+        </TourGuideZone>
 
       </ScrollView>
 

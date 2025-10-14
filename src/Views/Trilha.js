@@ -9,6 +9,7 @@ import { getFirestore } from "firebase/firestore";
 import { FIREBASE_APP, FIREBASE_AUTH } from "../../FirebaseConfig.js";
 import { useNavigation } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/native";
+import { TourGuideZone, TourGuideZoneByPosition, useTourGuideController } from 'rn-tourguide'
 
 export default function Trilha() {
   const auth = FIREBASE_AUTH;
@@ -29,6 +30,46 @@ export default function Trilha() {
   const fasesPerPage = 3;
 
   const totalPages = Math.ceil(fases.length / fasesPerPage);
+
+  const tutorialFase2Iniciado = route.condicao?.tutorialConcluido;
+  const { start, tourKey, canStart, eventEmitter, stop } = useTourGuideController();
+
+  const handleOnStop = useCallback(() => {
+    eventEmitter.off('stop', handleOnStop);
+    console.log('Tour finalizado. Navegando para próxima fase.2');
+    /*setTimeout(() => {
+      navigation.navigate('Trilha', { params: 'crase' }, { condicao: { tutorialConcluido: true } });
+      console.log("Comando de navegação enviado com sucesso.");
+    }, 0);*/
+  }, [/*navigation*/, handleOnStop]);
+
+
+  useFocusEffect(
+    useCallback(() => {
+      let timer;
+      if (tutorialFase2Iniciado && canStart) {
+        timer = setTimeout(() => {
+          console.log("Iniciando tour no passo 14 após foco.");
+          start(14);
+          navigation.setParams({ tutorialConcluidofase2: undefined });
+        }, 500);
+      }
+
+      return () => {
+        clearTimeout(timer);
+      };
+
+    }, [tutorialFase2Iniciado, canStart, start, navigation])
+  );
+
+
+  useEffect(() => {
+    eventEmitter.on('stop', handleOnStop);
+
+    return () => {
+
+    };
+  }, [eventEmitter, handleOnStop])
 
   useFocusEffect(
     useCallback(() => {
@@ -95,7 +136,7 @@ export default function Trilha() {
         onPress={() =>
           navigation.navigate("QuestoesTrilha", {
             screen: "QuestoesTrilha",
-            params: { info: info, userId: userId , subTemaDoc: subTemaDoc},
+            params: { info: info, userId: userId, subTemaDoc: subTemaDoc },
           })
         }
       >
@@ -192,11 +233,13 @@ export default function Trilha() {
       </View>
 
       {currentPage < totalPages - 1 && (
+        <TourGuideZone zone={14}>
         <View style={Styles.bottomButtonContainer}>
           <TouchableOpacity style={Styles.paginationButton} onPress={goToNextPage}>
             <Ionicons name="arrow-down" style={Styles.iconStyle} />
           </TouchableOpacity>
         </View>
+        </TourGuideZone>
       )}
     </ImageBackground>
   );
