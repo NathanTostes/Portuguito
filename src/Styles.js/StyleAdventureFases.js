@@ -97,6 +97,12 @@ export default StyleSheet.create({
         resizeMode: "contain",
     },
 
+	glowEffect: {
+        position: 'absolute',
+        tintColor: '#fff',
+        transform: [{ scale: 1.1 }],
+    },
+
     boxImageButton: {
         height: 260,
         width: 260,

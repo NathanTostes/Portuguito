@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, TextInput, TouchableOpacity, Text, Alert, ScrollView, Modal } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Styles from "../Styles.js/StylesCadastro";
+import Styles from "../Styles.js/StylesHome";
 import { LinearGradient } from "expo-linear-gradient";
 import { FIREBASE_APP, FIREBASE_AUTH } from "../../FirebaseConfig";
 import { collection, setDoc, doc, getDocs, updateDoc, query, where } from "firebase/firestore";
@@ -11,9 +11,6 @@ import { getFirestore } from "firebase/firestore";
 export default function EditarConfig() {
 
     const [nome, setNome] = useState("");
-    const [email, setEmail] = useState("");
-    const [confirmarEmail, setConfirmarEmail] = useState("");
-
     const [oldData, setOldData] = useState({});
 
     const navigation = useNavigation();
@@ -33,8 +30,7 @@ export default function EditarConfig() {
                     const data = userDoc.data();
 
                     setNome(data.nome || "");
-                    setEmail(data.email || "");
-                    setOldData({ id: userDoc.id, nome: data.nome, email: data.email });
+                    setOldData({ id: userDoc.id, nome: data.nome });
                 } else {
                     Alert.alert("Usuário não encontrado.");
                 }
@@ -48,12 +44,6 @@ export default function EditarConfig() {
         fetchUserData();
     }, []);
 
-    const validarEmail = (email) => {
-    const regex = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
-    console.log(regex.test(email))
-    return regex.test(email);
-  }
-
     const handleSubmit = async () => {
         try {
             if (!oldData.id) {
@@ -61,26 +51,13 @@ export default function EditarConfig() {
                 return;
             }
 
-            if (nome === oldData.nome && email === oldData.email) {
+            if (nome === oldData.nome) {
                 Alert.alert("Nenhuma alteração detectada.");
                 return;
             }
 
-
-            if (email !== confirmarEmail) {
-                Alert.alert("Erro", "E-mail e confirmação não coincidem.");
-                return;
-            }
-            if(email===null || email===""){
-                Alert.alert("Erro", "E-mail Invalido.");
-                return;
-            }
-            if(nome===null || nome===""){
+            if (nome === null || nome === "") {
                 Alert.alert("Erro", "Nome Invalido.");
-                return;
-            }
-            if(!validarEmail(email)){
-                Alert.alert("Email inválido")
                 return;
             }
 
@@ -88,7 +65,6 @@ export default function EditarConfig() {
 
             await updateDoc(docRef, {
                 nome: nome,
-                email: email
             });
 
             Alert.alert("Sucesso", "Dados atualizados com sucesso!");
@@ -103,38 +79,22 @@ export default function EditarConfig() {
             <ScrollView>
                 <View style={Styles.container}>
                     <View style={Styles.containerFilho}>
-                        <Text style={Styles.txtTituloPrincipal}>Alterar dados do Usuario</Text>
-                        <Text style={Styles.descricao}>Apelido:</Text>
+                        <Text style={Styles.frase}>Alterar dados do Usuario</Text>
+                        <View style={Styles.inputContainer}>
+                            <Text style={Styles.txtInput}>Apelido:</Text>
 
-                        <TextInput
-                            style={Styles.input}
-                            value={nome}
-                            onChangeText={(text) => setNome(text)}
-                        />
+                            <TextInput
+                                style={Styles.input}
+                                value={nome}
+                                onChangeText={(text) => setNome(text)}
+                            />
+                        </View>
                     </View>
-
-                    <View style={Styles.containerFilho}>
-                        <Text style={Styles.descricao}>E-mail:</Text>
-
-                        <TextInput
-                            style={Styles.input}
-                            value={email}
-                            onChangeText={(text) => setEmail(text.toLocaleLowerCase())}
-                        />
+                    <View style={Styles.containerBotao}>
+                        <TouchableOpacity style={Styles.botao} onPress={handleSubmit}>
+                            <Text style={Styles.txtBotao}>Salvar Alterações</Text>
+                        </TouchableOpacity>
                     </View>
-
-                    <View style={Styles.containerFilho}>
-                        <Text style={Styles.descricaoGrande}>Confirmação do e-mail:</Text>
-
-                        <TextInput
-                            style={Styles.input}
-                            onChangeText={(text) => setConfirmarEmail(text.toLocaleLowerCase())}
-                        />
-                    </View>
-
-                    <TouchableOpacity style={Styles.botao} onPress={handleSubmit}>
-                        <Text style={Styles.textBotao}>Salvar Alterações</Text>
-                    </TouchableOpacity>
                 </View>
             </ScrollView>
         </LinearGradient>

@@ -135,7 +135,7 @@ export default function Configuracao() {
                     <View style={Style.containerBorder}>
                         <Text style={Style.txtTitulo}>Conta</Text>
                         <View style={Style.containerLabel}>
-                            <Text style={Style.txtLabel}>Editar Perfil:</Text>
+                            <Text style={Style.txtLabel}>Editar Apelido:</Text>
                             <TouchableOpacity style={Style.botao} onPress={() => navigation.navigate('EditarConfig')}>
                                 <Text style={Style.txtBotao}>Editar</Text>
                             </TouchableOpacity>

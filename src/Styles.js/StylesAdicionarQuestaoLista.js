@@ -13,9 +13,7 @@ export default StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
   },
-  inputContainer: {
-    marginBottom: 10,
-  },
+
   input: {
     borderWidth: 1,
     borderColor: "#ccc",

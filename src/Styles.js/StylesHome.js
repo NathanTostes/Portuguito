@@ -100,5 +100,10 @@ export default StyleSheet.create({
   switch: {
     position: 'relative',
     top: '-20%',
-  }
+  },
+  inputContainer: {
+    marginBottom: 10,
+    marginLeft:10,
+    marginRight:10
+  },
 });

@@ -420,8 +420,8 @@ export default [
             {
                 enemies: [
                     {
-                        vida: 1,
-                        dano: 1,
+                        vida: 25,
+                        dano: 20,
                         imagem: require('../Imagens/adventure/minion8.png')
                     }
                 ]

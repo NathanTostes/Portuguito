@@ -121,7 +121,8 @@ export default StyleSheet.create({
         color: '#fff',
         fontSize: 15,
         left: 20
-    }
+    },
+    
 
     
 })
