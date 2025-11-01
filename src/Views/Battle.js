@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import { View, Text, ImageBackground, TouchableOpacity, Image, BackHandler, Alert } from "react-native";
 import Styles from "../Styles.js/StyleBattle.js";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,6 +13,14 @@ export default function Battle({ route, navigation }) {
     );
 
     const [character, setCharacter] = useState(characterInfo);
+    const vidaAnterior = useRef(characterInfo.life);
+
+    useEffect(() => {
+        if (character.life < vidaAnterior.current) {
+            Alert.alert("Atenção!", `Você perdeu ${vidaAnterior.current - character.life} ponto(s) de vida.\nRestam ${character.life} ponto(s) de vida.`, [{ text: "Ok" }]);
+        }
+        vidaAnterior.current = character.life;
+    }, [character.life]);
 
     const colors = {
         life: { bg: "#27ae60", border: "#1e8449" },
@@ -20,11 +28,11 @@ export default function Battle({ route, navigation }) {
         extraTime: { bg: "#3498db", border: "#2a75b0" },
     };
 
-    useFocusEffect (
+    useFocusEffect(
         useCallback(() => {
             const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
                 Alert.alert(
-                    "Sair da Batalha",  
+                    "Sair da Batalha",
                     "Tem certeza de que deseja abandonar a batalha? Você perderá todo o progresso da aventura.",
                     [
                         { text: "Cancelar", style: "cancel" },
@@ -43,7 +51,7 @@ export default function Battle({ route, navigation }) {
             return () => backHandler.remove();
         }, [])
     );
-       
+
     useEffect(() => {
         if (route.params) {
             const { hitSuccess, enemyIndex } = route.params;
