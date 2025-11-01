@@ -6,7 +6,8 @@ import ProfileImage from "../Views/ProfileImage";
 import FormRate from "../Views/FormRate";
 import Configuracao from "../Views/Configuracao";
 import EditarConfig from "../Views/EditarConfig";
-import AlterarSenha from "../Views/AlterarSenha";
+import AjudaAluno from "../Views/AjudaAlunos";
+
 
 import { useTabDisplay } from "../hooks/useTabDisplay"
 
@@ -27,6 +28,7 @@ export default function StackNavStudent({ navigation, route }) {
             <Stack.Screen name="Configuracao" component={Configuracao} />
             <Stack.Screen name="EditarConfig" component={EditarConfig} />
             <Stack.Screen name="Rate" component={FormRate} />
+            <Stack.Screen name="Ajuda" component={AjudaAluno}/>
         </Stack.Navigator>
     );
 }
