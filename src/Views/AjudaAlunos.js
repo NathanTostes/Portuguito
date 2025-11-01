@@ -89,7 +89,7 @@ export default function HelpScreen() {
                         source={require("../Imagens/icons/bola.png")}
                         
                     />
-                    <Text style={StylesPerfil.listaItemTexto}>Clique no botão “ + ” para alterar sua foto de perfil</Text>
+                    <Text style={StylesPerfil.listaItemTexto}>Clique no botão “ + ” para alterar sua foto de perfil.</Text>
                 </View>
                 <Image 
                     source={require('../Imagens/icons/profileButton.png')}
@@ -99,7 +99,7 @@ export default function HelpScreen() {
                     <Image
                         source={require("../Imagens/icons/bola.png")}
                     />
-                    <Text style={StylesPerfil.listaItemTexto}>Botão para entrar nas configurações do aplicativo</Text>
+                    <Text style={StylesPerfil.listaItemTexto}>Botão para entrar nas configurações do aplicativo.</Text>
                 </View>
                 <Image 
                     source={require('../Imagens/icons/configuracao.png')}
@@ -109,7 +109,7 @@ export default function HelpScreen() {
                     <Image
                         source={require("../Imagens/icons/bola.png")}
                     />
-                    <Text style={StylesPerfil.listaItemTexto}>Botão para sair da sua conta atual e ir para a tela de Login/Cadastro</Text>
+                    <Text style={StylesPerfil.listaItemTexto}>Botão para sair da sua conta atual e ir para a tela de Login/Cadastro.</Text>
                 </View>
                 <Image 
                     source={require('../Imagens/icons/sair.png')}
